@@ -47,7 +47,7 @@ module.exports = function(passport) {
     }, function(request, email, password, done) {
         process.nextTick(function() {
 
-            User.findOne({ 'video45.email' : email }, function(err, user) {
+            User.findOne({ 'email' : email }, function(err, user) {
 
                 // return errors
                 if (err)
@@ -64,8 +64,11 @@ module.exports = function(passport) {
                     var newUser = new User();
 
                     // set user credentials
-                    newUser.video45.email = email;
-                    newUser.video45.password = newUser.generateHash(password);
+                    newUser.firstName = request.body.firstName;
+                    newUser.lastName = request.body.lastName;
+                    newUser.email = email;
+                    newUser.username = request.body.username;
+                    newUser.password = newUser.generateHash(password);
 
                     // save new user
                     newUser.save(function(err) {
@@ -100,7 +103,7 @@ module.exports = function(passport) {
 
         }, function(request, email, password, done) {
 
-            User.findOne({ 'video45.email' : email } , function(err, user) {
+            User.findOne({ 'email' : email } , function(err, user) {
 
                 // if errors, return the errors
                 if (err) {
@@ -145,7 +148,6 @@ module.exports = function(passport) {
             // asynchronous
             process.nextTick(function() {
 
-
                 if (!request.user) { // check if user is already logged in
 
                     // search database for user by facebook id
@@ -172,6 +174,20 @@ module.exports = function(passport) {
                             return done(null, user);
 
                         } else { // if not user is found
+
+                            process.nextTick(function() {
+                                profile.emails.forEach(function(item) {
+                                    User.findOne({'email': item}, function(err, user) {
+                                        if (err) {
+                                            return done(err);
+                                        }
+
+                                        if (user) {
+                                            return addFacebook(user, profile, token, done);
+                                        }
+                                    })
+                                });
+                            });
 
                             // create new user with facebook credentials
                             return addFacebook(new User(), profile, token, done);
@@ -284,8 +300,22 @@ module.exports = function(passport) {
 
                     } else { // if user does not exist
 
+                        process.nextTick(function() {
+                            profile.emails.forEach(function(item) {
+                               User.findOne({'email': item}, function(err, user) {
+                                   if (err) {
+                                       return done(err);
+                                   }
+
+                                   if (user) {
+                                       return addGoogle(user, profile, token, done);
+                                   }
+                               })
+                            });
+                        });
+
                         // create a new user with google credentials
-                        return addGoogle(request.user, profile, token, done);
+                        return addGoogle(new User(), profile, token, done);
 
                     }
 
@@ -339,6 +369,8 @@ function addFacebook(user, profile, token, done) {
 //      the database and saves the user to the session
 // Returns saved user on success, error on failure
 function addTwitter(user, profile, token, done) {
+
+    //console.log(profile);
 
     user.twitter.id             = profile.id;
     user.twitter.token          = token;

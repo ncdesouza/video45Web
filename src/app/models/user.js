@@ -5,11 +5,11 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
-
-    video45         : {
-        email       : String,
-        password    : String
-    },
+    email       : String,
+    password    : String,
+    username    : String,
+    firstName   : String,
+    lastName    : String,
     facebook        : {
         id          : String,
         token       : String,

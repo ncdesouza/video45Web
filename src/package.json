@@ -1,5 +1,5 @@
 {
-  "name" : "node-authentication",
+  "name" : "video45",
   "main" : "server.js",
   "dependencies" : {
     "express" : "~4.0.0",
@@ -17,6 +17,8 @@
     "cookie-parser": "~1.0.0",
     "method-override": "~1.0.0",
     "email-verification": "~0.1.9",
-    "express-session": "~1.0.0"
+    "express-session": "~1.0.0",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0"
   }
 }

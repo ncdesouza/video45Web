@@ -1,6 +1,6 @@
 // app/routes.js
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, nev) {
 
 
     // =========================================================================
@@ -8,22 +8,11 @@ module.exports = function(app, passport) {
     // =========================================================================
     app.get('/', function(request, response) {
 
-        response.render('index.ejs'); // load index.ejs template
+        response.render('index.ejs', {message: request.flash('loginMessage')});
 
     });
 
-
-    // =========================================================================
-    // Login ===================================================================
-    // =========================================================================
-    app.get('/login', function(request, response) {
-
-        response.render('login.ejs', {message: request.flash('loginMessage')});
-
-    });
-
-    // process the login form
-    app.post('/login', passport.authenticate('video45-login', {
+    app.post('/', passport.authenticate('video45-login', {
 
         successRedirect : '/profile', // redirect to profile
         failureRedirect : '/login', // redirect to login
@@ -39,6 +28,13 @@ module.exports = function(app, passport) {
 
         // render signup page and pass data if exists
         response.render('signup.ejs', {message: request.flash('signupMessage')});
+
+    });
+
+
+    app.get('/setup', function(request, response) {
+
+        //
 
     });
 
@@ -157,6 +153,26 @@ module.exports = function(app, passport) {
 
     });
 
+
+    // =========================================================================
+    // Login ===================================================================
+    // =========================================================================
+    app.get('/login', function(request, response) {
+
+        response.render('login.ejs', {message: request.flash('loginMessage')});
+
+    });
+
+    // process the login form
+    app.post('/login', passport.authenticate('video45-login', {
+
+        successRedirect : '/profile', // redirect to profile
+        failureRedirect : '/', // redirect to login
+        failureFlash : true
+
+    }));
+
+
     // =========================================================================
     // Profile =================================================================
     // =========================================================================
@@ -169,6 +185,7 @@ module.exports = function(app, passport) {
         });
 
     });
+
 
     // =========================================================================
     // Logout ==================================================================

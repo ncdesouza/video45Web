@@ -1,0 +1,21 @@
+{
+  "name": "video45",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ncdesouza/video45-dev",
+  "authors": [
+    "ncdesouza <nicholas.desouza@uoit.net>"
+  ],
+  "main": "server.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "BigVideo": "BigVideo.js#~1.1.5",
+    "jquery": "~2.1.4"
+  }
+}

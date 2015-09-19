@@ -12,14 +12,16 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var nev = require('email-verification');
 
 var configDB = require('./config/database.js');
-
 
 // config ======================================================================
 mongoose.connect(configDB.url); // connect to db
 
 require('./config/passport')(passport); // pass passport for config
+
+require('./config/emailVerification')(nev); // pass nev for config
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
@@ -31,13 +33,18 @@ app.set('view engine', 'ejs'); // setup ejs for templates
 // setup passport
 app.use(session({ secret : 'video454life' }));
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
 app.use(flash());
 
 
-// routes ======================================================================
-require('./app/routes.js')(app, passport); // load routes and passport to app
+// set static directories
+app.use('/public', express.static('public'));
+app.use('/bower_components',  express.static('bower_components'));
 
+
+// routes ======================================================================
+require('./app/routes.js')(app, passport, nev); // load routes and passport to app
+require('./app/routes/auth.js')(app, passport, nev);
 
 // launch ======================================================================
 app.listen(port);
