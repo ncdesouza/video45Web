@@ -36,9 +36,9 @@ module.exports = function(passport) {
 
 
     // =========================================================================
-    // video45 signup ==========================================================
+    // video45 sign up ==========================================================
     // =========================================================================
-    passport.use('video45-signup', new LocalStrategy({
+    passport.use('signup', new LocalStrategy({
 
         usernameField       : 'email',
         passwordField       : 'password',
@@ -95,7 +95,7 @@ module.exports = function(passport) {
     // =========================================================================
     // video45 login ===========================================================
     // =========================================================================
-    passport.use('video45-login', new LocalStrategy({
+    passport.use('login', new LocalStrategy({
 
             usernameField : 'email',
             passwordField : 'password',
@@ -131,12 +131,73 @@ module.exports = function(passport) {
     // =========================================================================
     // Facebook ================================================================
     // =========================================================================
-    passport.use(new FacebookStrategy({
+    passport.use('facebook-auth', new FacebookStrategy({
 
-            // pull in our app id and secret from our auth.js file
+            // pull in our app id and secret from our register.js file
             clientID            : configAuth.facebookAuth.clientID,
             clientSecret        : configAuth.facebookAuth.clientSecret,
-            callbackURL         : configAuth.facebookAuth.callbackURL,
+            callbackURL         : configAuth.facebookAuth.authCallbackURL,
+            profileFields       : ['emails', 'displayName']
+
+        },
+
+        // facebook will send back the token and profile
+        function(token, refreshToken, profile, done) {
+
+            // asynchronous
+            process.nextTick(function() {
+
+                // search database for user by facebook id
+                User.findOne({'facebook.id': profile.id}, function (err, user) {
+
+                    // if search error
+                    if (err) {
+
+                        // return error
+                        return done(err);
+
+                    }
+
+                    if (user) { // if the user is found
+
+                        return done(null, false, request.flash('signupMessage',
+                            'You have already registered'));
+
+                    } else { // if not user is found
+
+                        process.nextTick(function() {
+                            profile.emails.forEach(function(item) {
+                                User.findOne({'email': item}, function(err, user) {
+                                    if (err) {
+                                        return done(err);
+                                    }
+
+                                    if (user) {
+                                        return done(null, false, request.flash('signupMessage',
+                                            'It seems like you have already registered using a different account.\n' +
+                                            'Sign in with that account and you can link your facebook account to it.'));
+                                    }
+                                })
+                            });
+                        });
+
+                        // create new user with facebook credentials
+                        return addFacebook(new User(), profile, token, done);
+
+                    }
+
+                });
+
+            });
+
+        }));
+
+    passport.use('facebook-login', new FacebookStrategy({
+
+            // pull in our app id and secret from our register.js file
+            clientID            : configAuth.facebookAuth.clientID,
+            clientSecret        : configAuth.facebookAuth.clientSecret,
+            callbackURL         : configAuth.facebookAuth.loginCallbackURL,
             profileFields       : ['emails', 'displayName'],
             passReqToCallback   : true
 
@@ -145,10 +206,9 @@ module.exports = function(passport) {
         // facebook will send back the token and profile
         function(request, token, refreshToken, profile, done) {
 
-            // asynchronous
             process.nextTick(function() {
 
-                if (!request.user) { // check if user is already logged in
+                if (!request.user) {
 
                     // search database for user by facebook id
                     User.findOne({'facebook.id': profile.id}, function (err, user) {
@@ -163,43 +223,155 @@ module.exports = function(passport) {
 
                         if (user) { // if the user is found
 
-                            if (!user.facebook.token) {
-
-                                // relink facebook with user
-                                return addFacebook(user, profile, token, done);
-
-                            }
-
-                            // return user to session
                             return done(null, user);
-
-                        } else { // if not user is found
-
-                            process.nextTick(function() {
-                                profile.emails.forEach(function(item) {
-                                    User.findOne({'email': item}, function(err, user) {
-                                        if (err) {
-                                            return done(err);
-                                        }
-
-                                        if (user) {
-                                            return addFacebook(user, profile, token, done);
-                                        }
-                                    })
-                                });
-                            });
-
-                            // create new user with facebook credentials
-                            return addFacebook(new User(), profile, token, done);
 
                         }
 
+                        return done(null, false, request.flash('loginMessage',
+                            'We could not find you in our records. Please ' +
+                            'click the link at the bottom and sign up for ' +
+                            'an account.'));
+
                     });
 
-                } else { // user exists and logged in
+                } else {
 
-                    // add facebook credentials to user account
-                    return addFacebook(request.user, profile, token, done);
+                    return done(null, request.user);
+
+                }
+
+            });
+
+        }));
+
+    passport.use('facebook-link', new FacebookStrategy({
+
+            // pull in our app id and secret from our register.js file
+            clientID            : configAuth.facebookAuth.clientID,
+            clientSecret        : configAuth.facebookAuth.clientSecret,
+            callbackURL         : configAuth.facebookAuth.linkCallbackURL,
+            profileFields       : ['emails', 'displayName'],
+            passReqToCallback   : true
+
+        },
+
+        // facebook will send back the token and profile
+        function(request, token, refreshToken, profile, done) {
+
+            if (request.user) {
+
+                return addFacebook(request.user, profile, token, done)
+
+            } else {
+
+                return done(null, false)
+
+            }
+
+        }));
+
+
+    // =========================================================================
+    // Twitter =================================================================
+    // =========================================================================
+    passport.use('twitter-auth', new TwitterStrategy({
+
+        consumerKey         : configAuth.twitterAuth.consumerKey,
+        consumerSecret      : configAuth.twitterAuth.consumerSecret,
+        callbackURL         : configAuth.twitterAuth.authCallbackURL
+
+    },
+
+        function(token, tokenSecret, profile, done) {
+
+        process.nextTick(function() {
+
+            // search database for user by facebook id
+            User.findOne({'twitter.id': profile.id}, function (err, user) {
+
+                // if search error
+                if (err) {
+
+                    // return error
+                    return done(err);
+
+                }
+
+                if (user) { // if the user is found
+
+                    return done(null, false, request.flash('signupMessage',
+                        'You have already registered. Click Login at the bottom of ' +
+                        'the page to login to your account'));
+
+                } else { // if not user is found
+
+                    //process.nextTick(function() {
+                    //    profile.emails.forEach(function(item) {
+                    //        User.findOne({'email': item}, function(err, user) {
+                    //            if (err) {
+                    //                return done(err);
+                    //            }
+                    //
+                    //            if (user) {
+                    //                return done(null, false, request.flash('signupMessage',
+                    //                    'It seems like you have already registered using a ' +
+                    //                    'different account. Sign in with that account and you ' +
+                    //                    'can link your twitter account to it.'));
+                    //            }
+                    //        })
+                    //    });
+                    //});
+
+                    // create new user with facebook credentials
+                    return addTwitter(new User(), profile, token, done);
+
+                }
+            });
+        });
+    }));
+
+    passport.use('twitter-login', new TwitterStrategy({
+
+            consumerKey         : configAuth.twitterAuth.consumerKey,
+            consumerSecret      : configAuth.twitterAuth.consumerSecret,
+            callbackURL         : configAuth.twitterAuth.loginCallbackURL,
+            passReqToCallback   : true
+
+        },
+
+        function(request, token, tokenSecret, profile, done) {
+
+            process.nextTick(function() {
+
+                if (!request.user) {
+
+                    // search database for user by facebook id
+                    User.findOne({'twitter.id': profile.id}, function (err, user) {
+
+                        // if search error
+                        if (err) {
+
+                            // return error
+                            return done(err);
+
+                        }
+
+                        if (user) { // if the user is found
+
+                            return done(null, user);
+
+                        }
+
+                        return done(null, false, request.flash('loginMessage',
+                            'We could not find you in our records. Please ' +
+                            'click the link at the bottom and sign up for ' +
+                            'an account.'));
+
+                    });
+
+                } else {
+
+                    return done(null, request.user);
 
                 }
 
@@ -208,128 +380,162 @@ module.exports = function(passport) {
         }));
 
 
-    // =========================================================================
-    // Twitter =================================================================
-    // =========================================================================
-    passport.use(new TwitterStrategy({
+    passport.use('twitter-link', new TwitterStrategy({
 
-        consumerKey         : configAuth.twitterAuth.consumerKey,
-        consumerSecret      : configAuth.twitterAuth.consumerSecret,
-        callbackURL         : configAuth.twitterAuth.callbackURL,
-        passReqToCallback   : true
+            consumerKey         : configAuth.twitterAuth.consumerKey,
+            consumerSecret      : configAuth.twitterAuth.consumerSecret,
+            callbackURL         : configAuth.twitterAuth.linkCallbackURL,
+            passReqToCallback   : true
 
-    },
+        },
 
-    function(request, token, tokenSecret, profile, done) {
+        function(request, token, tokenSecret, profile, done) {
 
-        process.nextTick(function() {
+            if (request.user) {
 
-            if (!request.user) {
-
-                User.findOne({'twitter.id': profile.id}, function (err, user) {
-
-                    if (err) { // if error
-                        return done(err);
-                    }
-
-                    if (user) { // if user is found
-
-                        if (!user.twitter.token) { // if user exists but was unlinked
-
-                            // add the twitter credentials to user account
-                            return addTwitter(user, profile, token, done)
-
-                        }
-
-                        return done(null, user); // pass user to session
-
-                    } else { // if no user is found
-
-                        // create a new user and add pass the user to session
-                        return addTwitter(new User(), profile, token, done)
-
-                    }
-
-                });
-
-            } else { // if user is logged in
-
-                // link twitter account to current user account
                 return addTwitter(request.user, profile, token, done)
 
+            } else {
+
+                return done(null, false)
+
             }
-        });
-    }));
+
+        }));
 
 
     // =========================================================================
     // Google ==================================================================
     // =========================================================================
-    passport.use(new GoogleStrategy({
+    passport.use('google-auth', new GoogleStrategy({
 
         clientID            : configAuth.googleAuth.clientID,
         clientSecret        : configAuth.googleAuth.clientSecret,
-        callbackURL         : configAuth.googleAuth.callbackURL,
-        passReqToCallback   : true
+        callbackURL         : configAuth.googleAuth.authCallbackURL
 
     },
-    function(request, token, refreshToken, profile, done) {
 
-        process.nextTick(function() {
+        function(request, token, refreshToken, profile, done) {
 
-            if (!request.user) { // if user is not logged in
+            // asynchronous
+            process.nextTick(function() {
 
+                // search database for user by facebook id
                 User.findOne({'google.id': profile.id}, function (err, user) {
 
-                    if (err) { // if error
+                    // if search error
+                    if (err) {
 
+                        // return error
                         return done(err);
 
                     }
 
-                    if (user) { // if user is found
+                    if (user) { // if the user is found
 
-                        if (!user.google.token) { // if unlinked account
+                        return done(null, false, request.flash('signupMessage',
+                            'You have already registered'));
 
-                            // relink the user with google credentials
-                            return addGoogle(user, profile, token, done);
-
-                        }
-
-                        return done(null, user);
-
-                    } else { // if user does not exist
+                    } else { // if not user is found
 
                         process.nextTick(function() {
                             profile.emails.forEach(function(item) {
-                               User.findOne({'email': item}, function(err, user) {
-                                   if (err) {
-                                       return done(err);
-                                   }
+                                User.findOne({'email': item}, function(err, user) {
+                                    if (err) {
+                                        return done(err);
+                                    }
 
-                                   if (user) {
-                                       return addGoogle(user, profile, token, done);
-                                   }
-                               })
+                                    if (user) {
+                                        return done(null, false, request.flash('signupMessage',
+                                            'It seems like you have already registered using a different account.\n' +
+                                            'Sign in with that account and you can link your google account to it.'));
+                                    }
+                                })
                             });
                         });
 
-                        // create a new user with google credentials
+                        // create new user with facebook credentials
                         return addGoogle(new User(), profile, token, done);
 
                     }
 
                 });
 
-            } else { // if user is logged in
+            });
 
-                return addGoogle(request.user, profile, token, done);
+        }));
+
+    passport.use('google-login', new GoogleStrategy({
+
+            clientID            : configAuth.googleAuth.clientID,
+            clientSecret        : configAuth.googleAuth.clientSecret,
+            callbackURL         : configAuth.googleAuth.loginCallbackURL,
+            passReqToCallback   : true
+
+        },
+
+        function(request, token, refreshToken, profile, done) {
+
+            process.nextTick(function() {
+
+                if (!request.user) {
+
+                    // search database for user by facebook id
+                    User.findOne({'google.id': profile.id}, function (err, user) {
+
+                        // if search error
+                        if (err) {
+
+                            // return error
+                            return done(err);
+
+                        }
+
+                        if (user) { // if the user is found
+
+                            return done(null, user);
+
+                        }
+
+                        return done(null, false, request.flash('loginMessage',
+                            'We could not find you in our records. Please ' +
+                            'click the link at the bottom and sign up for ' +
+                            'an account.'));
+
+                    });
+
+                } else {
+
+                    return done(null, request.user);
+
+                }
+
+            });
+
+        }));
+
+    passport.use('google-link', new GoogleStrategy({
+
+            clientID            : configAuth.googleAuth.clientID,
+            clientSecret        : configAuth.googleAuth.clientSecret,
+            callbackURL         : configAuth.googleAuth.linkCallbackURL,
+            passReqToCallback   : true
+
+        },
+
+        function(request, token, refreshToken, profile, done) {
+
+            if (request.user) {
+
+                return addGoogle(request.user, profile, token, done)
+
+            } else {
+
+                return done(null, false)
 
             }
 
-        });
-
-    }));
+        }));
 
 };
 

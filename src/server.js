@@ -43,8 +43,8 @@ app.use('/bower_components',  express.static('bower_components'));
 
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport, nev); // load routes and passport to app
-require('./app/routes/auth.js')(app, passport, nev);
+require('./app/routes/public/public.js')(app, passport, nev);
+require('./app/routes/user/user.js')(app, passport);
 
 // launch ======================================================================
 app.listen(port);
