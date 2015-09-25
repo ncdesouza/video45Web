@@ -1,6 +1,6 @@
 // app/routes/auth.js
 
-module.exports = function(app, passport, nev) {
+module.exports = function(app, passport) {
 
     // =========================================================================
     // Sign up ==================================================================
@@ -16,8 +16,8 @@ module.exports = function(app, passport, nev) {
     // process the sign up form
     app.post('/signup', passport.authenticate('signup', {
 
-        successRedirect : '/profile', // redirect to profile
-        failureRedirect : '/signup', // redirect to signup
+        successRedirect : '/setup', // redirect to profile
+        failureRedirect : '/', // redirect to sign up
         failureFlash : true
 
     }));

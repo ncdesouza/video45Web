@@ -12,7 +12,8 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var nev = require('email-verification');
+var nodemailer = require('nodemailer');
+var upload = require('multer')({ dest: '../public/uploads'});
 
 var configDB = require('./config/database.js');
 
@@ -20,8 +21,8 @@ var configDB = require('./config/database.js');
 mongoose.connect(configDB.url); // connect to db
 
 require('./config/passport')(passport); // pass passport for config
+var transporter = require('./config/email')(nodemailer); // pass nodemailer for config
 
-require('./config/emailVerification')(nev); // pass nev for config
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
@@ -34,7 +35,10 @@ app.set('view engine', 'ejs'); // setup ejs for templates
 app.use(session({ secret : 'video454life' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// setup utilities
 app.use(flash());
+app.use(upload);
 
 
 // set static directories
@@ -43,7 +47,7 @@ app.use('/bower_components',  express.static('bower_components'));
 
 
 // routes ======================================================================
-require('./app/routes/public/public.js')(app, passport, nev);
+require('./app/routes/public/public.js')(app, passport, transporter);
 require('./app/routes/user/user.js')(app, passport);
 
 // launch ======================================================================
