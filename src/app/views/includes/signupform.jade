@@ -1,0 +1,71 @@
+.col-xs-12.col-sm-12
+   h1.text-left video45
+   h2.text-left
+      span.fa.fa-sign-in
+      |  Sign Up
+   br
+
+.col-xs-8.col-sm-8(style='border-right:1px solid #000;height:250px')
+   .col-xs-11.col-sm-11.pull-left
+      // show any messages that come back with authentication
+   .col-xs-11.col-sm-11.pull-left
+      form.form-horizontal(action='/signup', method='post', role='form')
+         .row
+            .form-group
+               // First name and Last Name
+               .col-xs-6.col-sm-6
+                  input.form-control(type='text', name='firstName', placeholder='First Name')
+               .col-xs-6.col-sm-6
+                  input.form-control(type='text', name='lastName', placeholder='Last Name')
+         .row
+            // Email
+            .form-group
+               .col-xs-12.col-sm-12
+                  input.form-control(type='text', name='email', placeholder='Email')
+         .row
+            // username
+            .form-group
+               .col-xs-12.col-sm-12
+                  input.form-control(type='password', name='password', placeholder='Password')
+         .row
+            // Password
+            .form-group
+               .col-xs-12.col-sm-12
+                  input.form-control(type='password', name='password2', placeholder='Password')
+         .row
+            .col-xs-12.col-sm-12.pull-left
+               button.btn.btn-success.btn-lg.btn-block(type='submit') Sign Up
+
+.col-xs-4.col-sm-4
+   .col-xs-11.col-sm-11
+      h5
+         | Or
+         br
+         b Sign Up
+         |  with:
+         br
+   .btn-group-vertical
+      .col-xs-11.col-sm-11
+         .row
+            .col-xs-12.col-sm-12
+               a.btn.btn-primary.btn-block(href='/auth/facebook')
+                  span.fa.fa-facebook-official &nbsp;&nbsp;Facebook&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         .row
+            br
+         .row
+            .col-xs-12.col-sm-12
+               a.btn.btn-info.btn-block(href='/auth/twitter')
+                  span.fa.fa-twitter-square &nbsp;&nbsp;Twitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         .row
+            br
+         .row
+            .col-xs-12.col-sm-12
+               a.btn.btn-danger.btn-block(href='/auth/google')
+                  span.fa.fa-google-plus-square &nbsp;&nbsp;Google+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+.row
+   .col-xs-12.col-sm-12
+      br
+      hr
+      p
+         | Already have an account?
+         a(href='/')  Login

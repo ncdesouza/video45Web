@@ -1,0 +1,7 @@
+extends ./layouts/index
+
+block content
+   if user.email
+      include ./includes/setupform
+   else if user.facebook.id
+      include ./includes/setupfbform

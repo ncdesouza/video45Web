@@ -8,7 +8,7 @@ module.exports = function(app, passport, isLoggedIn) {
     // =========================================================================
     app.get('/profile', isLoggedIn, function(request, response) {
 
-        response.render('profile.ejs', {
+        response.render('profile.jade', {
 
             user : request.user // get user from session
 

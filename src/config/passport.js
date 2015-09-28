@@ -137,12 +137,13 @@ module.exports = function(passport) {
             clientID            : configAuth.facebookAuth.clientID,
             clientSecret        : configAuth.facebookAuth.clientSecret,
             callbackURL         : configAuth.facebookAuth.authCallbackURL,
-            profileFields       : ['emails', 'displayName']
+            profileFields       : ['emails', 'displayName', 'name'],
+            passReqToCallback   : true
 
         },
 
         // facebook will send back the token and profile
-        function(token, refreshToken, profile, done) {
+        function(request, token, refreshToken, profile, done) {
 
             // asynchronous
             process.nextTick(function() {
@@ -278,11 +279,12 @@ module.exports = function(passport) {
 
         consumerKey         : configAuth.twitterAuth.consumerKey,
         consumerSecret      : configAuth.twitterAuth.consumerSecret,
-        callbackURL         : configAuth.twitterAuth.authCallbackURL
+        callbackURL         : configAuth.twitterAuth.authCallbackURL,
+        passReqToCallback   : true
 
     },
 
-        function(token, tokenSecret, profile, done) {
+        function(request, token, tokenSecret, profile, done) {
 
         process.nextTick(function() {
 
@@ -411,7 +413,8 @@ module.exports = function(passport) {
 
         clientID            : configAuth.googleAuth.clientID,
         clientSecret        : configAuth.googleAuth.clientSecret,
-        callbackURL         : configAuth.googleAuth.authCallbackURL
+        callbackURL         : configAuth.googleAuth.authCallbackURL,
+        passReqToCallback   : true
 
     },
 
@@ -550,10 +553,14 @@ module.exports = function(passport) {
 // Returns saved user on success, error on failure
 function addFacebook(user, profile, token, done) {
 
+    console.log(profile.name);
+
     user.facebook.id    = profile.id;
     user.facebook.token = token;
     user.facebook.name  = profile.displayName;
     user.facebook.email = profile.emails[0].value;
+    user.firstName      = profile.name.givenName;
+    user.lastName       = profile.name.familyName;
 
     user.save(function(err) { // save facebook credentials to db
 

@@ -1,4 +1,10 @@
 // app/routes/auth.js
+var videos = [
+    '/public/vid/dock.mp4',
+    '/public/vid/frontier.mp4',
+    '/public/vid/river.mp4'
+];
+
 
 module.exports = function(app, passport) {
 
@@ -6,9 +12,9 @@ module.exports = function(app, passport) {
     // Sign up ==================================================================
     // =========================================================================
     app.get('/signup', function(request, response) {
-
+        var videoPaths = JSON.stringify(videos);
         // render signup page and pass data if exists
-        response.render('signup.ejs', {message: request.flash('signupMessage')});
+        response.render('signup', {message: request.flash('signupMessage'), videoPath: videoPaths});
 
     });
 
@@ -36,7 +42,7 @@ module.exports = function(app, passport) {
     // route to handle callback from facebook
     app.get('/auth/facebook/callback', passport.authenticate('facebook-auth', {
 
-            successRedirect : '/profile',
+            successRedirect : '/setup',
             failureRedirect : '/'
 
     }));
@@ -48,6 +54,7 @@ module.exports = function(app, passport) {
     // route for twitter authorization
     app.get('/auth/twitter', passport.authenticate('twitter', {
 
+        successRedirect: '/setup',
         failureRedirect: '/'
 
     }));
@@ -74,7 +81,7 @@ module.exports = function(app, passport) {
     // route to handle callback from twitter
     app.get('/auth/google/callback', passport.authenticate('google', {
 
-        successRedirect : '/profile',
+        successRedirect : '/setup',
         failureRedirect : '/'
 
     }));

@@ -1,0 +1,46 @@
+.col-xs-12.col-sm-12
+   h1.text-left  video45
+   h3.text-left
+      span.fa.fa-lock
+      |  Log in:
+.row
+   .col-xs-9.col-sm-9
+      // show any messages that come back with authentication
+// LOGIN FORM
+form.form-horizontal(action='/login', method='post')
+   // Email / Username field
+   .col-xs-9.col-sm-9
+      .form-group
+         input.form-control(type='text', name='email', placeholder='Email or Username')
+   // Password field
+   .col-xs-9.col-sm-9
+      .form-group
+         input.form-control(type='password', name='password', placeholder='Password')
+   .col-xs-3.col-sm-3
+      button.btn.btn-success.btn-block(type='submit') Login
+.row
+   .col-xs-12.col-sm-12
+      .row
+         .col-xs-9.col-sm-9
+            p or
+      .col-xs-3.col-sm-3
+         a.btn.btn-primary.btn-block(href='/login/facebook')
+            | &nbsp;&nbsp
+            span.fa.fa-facebook-official &nbsp;&nbsp;Facebook
+            | &nbsp;&nbsp;
+      .col-xs-3.col-sm-3
+         a.btn.btn-info.btn-block(href='/login/twitter')
+            | &nbsp;&nbsp;
+            span.fa.fa-twitter-square &nbsp;&nbsp;Twitter
+            | &nbsp;&nbsp;
+      .col-xs-3.col-sm-3
+         a.btn.btn-danger.btn-block(href='/login/google')
+            | &nbsp;&nbsp;
+            span.fa.fa-google-plus-square &nbsp;&nbsp;Google+
+            | &nbsp;&nbsp;
+.row
+   .col-xs-12.col-sm-12
+      hr
+      p
+         | Need an account?
+         a(href='/signup')  Sign Up

@@ -1,0 +1,49 @@
+.col-xs-12.col-sm-12
+   h1.text-left video45
+   h2.text-left
+      span.fa.fa-sign-in
+      |  Setup
+   br
+
+.col-xs-4.col-sm-4
+   .row
+      img#profilePic(class='img-rounded' src=user.profilePic)
+   br
+   .row
+      span(class="btn btn-default btn-file") Upload #[input#upload(type="file", accept="image/*")]
+
+
+.row
+   .col-xs-12.col-sm-12
+      br
+      hr
+      p
+      .col-xs-3.col-sm-3
+      a(class= href='/setup') Skip
+
+script(type="text/javascript").
+   var photo = document.getElementById("upload");
+   photo.onchange = function() {
+      var file = photo.files[0];
+      var img = document.getElementById("profilePic");
+      var reader = new FileReader();
+      reader.onloadend = function() {
+         var imgBase64 = reader.result;
+         $.ajax({
+            type: "POST",
+            url: "/upload-image",
+            contentType: 'application/json',
+            data: JSON.stringify({ imgBase64: imgBase64 })
+         }, function(data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+            img.src = imgBase64;
+         });
+      };
+
+      if (file) {
+         reader.readAsDataURL(file);
+      }
+
+
+   };
+

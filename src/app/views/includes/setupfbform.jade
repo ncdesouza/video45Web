@@ -1,0 +1,19 @@
+- var email =  ''
+if user.facebook.email
+    - email = user.facebook.email
+
+.col-xs-12.col-sm-12
+    h1.text-left video45
+    h2.text-left
+        span.fa.fa-sign-in
+        |  Confirm Email
+    br
+
+form.form-horizontal(action='/confirm-email', method='post', role='form')
+    .row
+        // Email
+        .form-group
+            .col-xs-12.col-sm-12
+                input.form-control(type='text', name='email', placeholder='Email', value=email)
+    .row
+            button.btn.btn-danger.btn-lg(type='submit') Confirm

@@ -5,7 +5,7 @@
   "authors": [
     "ncdesouza <nicholas.desouza@uoit.net>"
   ],
-  "main": "server.js",
+  "main": "src/server.js",
   "license": "MIT",
   "ignore": [
     "**/.*",

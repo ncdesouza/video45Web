@@ -1,4 +1,7 @@
 
+var jquery = require('jquery');
+
+
 
 $(function() {
     var BV = new $.BigVideo();

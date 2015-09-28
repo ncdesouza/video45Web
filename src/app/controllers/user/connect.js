@@ -2,7 +2,7 @@
 module.exports = function(app, passport, isLoggedIn) {
 
     app.get('/connect', isLoggedIn, function(request, response) {
-        response.render('connect.ejs', {
+        response.render('connect.jade', {
 
             user : request.user // get user from session
 

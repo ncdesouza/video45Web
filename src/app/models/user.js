@@ -10,6 +10,7 @@ var userSchema = mongoose.Schema({
     username    : String,
     firstName   : String,
     lastName    : String,
+    profilePic  : { type: String, default: '/public/img/default-profile-pic.png' },
     facebook        : {
         id          : String,
         token       : String,

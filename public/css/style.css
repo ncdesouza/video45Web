@@ -1,0 +1,44 @@
+.main {
+	position:relative;
+	-webkit-transition-duration:0.6s;-moz-transition-duration:0.6s;-ms-transition-duration:0.6s;-o-transition-duration:0.6s;transition-duration:0.6s;
+}
+
+.max-width {
+    max-width: 750px;
+    width: auto;
+
+}
+
+.jumbotron {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/*.col-xs-3 {*/
+    /*border-left: thick solid #000000;*/
+/*}*/
+
+hr.vertical-line {
+    width: 1px;
+    height: 100%;
+}
+

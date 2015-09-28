@@ -1,8 +1,4 @@
-var videos = [
-    'dock.mp4',
-    'frontier.mp4',
-    'river.mp4'
-];
+
 
 /**
  * Created by nicholas on 19/09/15.
@@ -12,15 +8,6 @@ module.exports = function(app, passport) {
     // =========================================================================
     // Video 45 ================================================================
     // =========================================================================
-
-    // index ===================================================================
-    app.get('/', function(request, response) {
-
-        var video = videos[Math.floor(Math.random()*videos.length)];
-        response.render('index.ejs', {message: request.flash('loginMessage'), videoPath: '/public/vid/'+video});
-
-    });
-
     app.post('/', passport.authenticate('login', {
 
         successRedirect : '/profile', // redirect to profile

@@ -29,7 +29,8 @@ app.use(morgan('dev')); // log every request to console
 app.use(cookieParser()); // cookie management
 app.use(bodyParser()); // html form handler
 
-app.set('view engine', 'ejs'); // setup ejs for templates
+app.set('views', 'app/views');
+app.set('view engine', 'jade'); // setup ejs for templates
 
 // setup passport
 app.use(session({ secret : 'video454life' }));
@@ -42,13 +43,13 @@ app.use(upload);
 
 
 // set static directories
-app.use('/public', express.static('public'));
-app.use('/bower_components',  express.static('bower_components'));
+app.use('/public', express.static('../public'));
+app.use('/bower_components',  express.static('../bower_components'));
 
 
-// routes ======================================================================
-require('./app/routes/public/public.js')(app, passport, transporter);
-require('./app/routes/user/user.js')(app, passport);
+// controllers ======================================================================
+require('./app/controllers/public/public.js')(app, passport, transporter);
+require('./app/controllers/user/user.js')(app, passport);
 
 // launch ======================================================================
 app.listen(port);
