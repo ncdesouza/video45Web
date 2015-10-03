@@ -2,8 +2,8 @@
   "name": "video45",
   "main": "src/server.js",
   "scripts": {
-    "db:start": "mongod --dbpath ~/Desktop/video45/data/db/",
-    "db:view": "nodejs /usr/local/lib/node_modules/mongo-express/app"
+    "db:start": "mongod --dbpath data/",
+    "db:view": "nodejs node_modules/mongo-express/app"
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
@@ -25,5 +25,8 @@
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2"
+  },
+  "devDependencies": {
+    "mongo-express": "~0.23.2"
   }
 }
