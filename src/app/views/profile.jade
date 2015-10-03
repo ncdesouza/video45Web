@@ -15,7 +15,7 @@ block content
 
 
         .col-xs-7.col-md-7
-            if video != null
+            if videos
                 - each video in JSON.parse(videos)
                     .row
                         include includes/videopost
