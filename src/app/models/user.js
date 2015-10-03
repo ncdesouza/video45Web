@@ -2,9 +2,14 @@
 
 // load dependencies
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
+var async = require('async');
+require('./video');
+require('./comment');
 
-var userSchema = mongoose.Schema({
+var userSchema = Schema({
+    //_id         : Number,
     email       : String,
     password    : String,
     username    : String,
@@ -28,8 +33,8 @@ var userSchema = mongoose.Schema({
         token       : String,
         email       : String,
         name        : String
-    }
-
+    },
+    videos : [{ type: Schema.Types.ObjectId, ref: 'Video'}]
 });
 
 // user methods ================================================================
@@ -42,6 +47,15 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
+
+userSchema.methods.getVideos = function(err, callback) {
+    async.forEach(this.videos, function(video) {
+        this.model('Video').findById(video)
+    });
+};
+
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+userSchema.plugin(deepPopulate, { whitelist: ['videos', 'comment']});
 
 // export model ================================================================
 module.exports = mongoose.model('User', userSchema);

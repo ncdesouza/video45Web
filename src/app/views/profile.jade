@@ -1,27 +1,21 @@
-doctype html
-// views/profile.ejs
-html
-   head
-      title Node Authentication
-      link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
-      link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
-      style.
-         body        { padding-top:80px; word-wrap:break-word; }
-   body
-      .container
-         .page-header.text-center
-            h1
-               span.fa.fa-anchor
-               |  Profile Page
-            a.btn.btn-default.btn-sm(href='/logout') Logout
-            a.btn.btn-default.btn-sm(href='/connect') Connect
-         .row
-            // LOCAL INFORMATION
-            .col-sm-6
-               .well
-                  h3
-                     span.fa.fa-user
-                     |  Local
-                  p
-                     strong id
-                     | :
+extends ./layouts/mainLayout
+
+block content
+    .carousel#topCarousel(data-ride="carousel")
+        ol.carousel-indicators
+            li.active(data-target="#topCarousel" data-slide-to="0")
+            li(data-target="#topCarousel" data-slide-to="1")
+            li(data-target="#topCarousel" data-slide-to="2")
+        .carousel-inner(role="listbox" style="max-height: 700px").text-center
+            .item.active
+                video.first-slide.scale-item(preload="auto" height="100%" autoplay src="/public/vid/dock.mp4" loop)
+
+    .container-fluid.centered
+        .col-xs-4.col-md-4
+            .container
+
+        .col-xs-8.col-md-8
+            for video in user.videos
+                - var comments = video.comments
+                .row
+                    include includes/videopost

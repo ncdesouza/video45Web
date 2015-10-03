@@ -1,0 +1,34 @@
+doctype html
+html
+   head
+      title video45 - Home
+      // load bootstrap css
+      link(rel='stylesheet', href='/public/bootstrap/css/bootstrap.min.css')
+      // load fontawesome
+      link(rel='stylesheet', href='/public/font-awesome/css/font-awesome.min.css')
+      // load custom stylesheet
+      link(rel='stylesheet', href='/public/css/style.css')
+
+body(style="background-color:lightgrey")
+   nav.navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+         .navbar-header
+            button.navbar-toggle(type="button" data-toggle="collapse" data-target="#mainNavbar")
+               span.sr-only Toggle navigation
+               span.icon-bar
+               span.icon-bar
+               span.icon-bar
+
+            a.navbar-brand(href='/home') [ video45 ]
+
+         div.collapse.navbar-collapse#mainNavbar
+            ul.nav.navbar-nav
+               li: a(href="/home").fa.fa-rss.fa-2x
+               li: a(href="/home").fa.fa-heartbeat.fa-2x
+
+            ul.nav.navbar-nav.navbar-right
+               li: a(href="/profile") Profile
+               li: a(href="/logout").fa.fa-sign-out.fa-lg
+
+   block content
+

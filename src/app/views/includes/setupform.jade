@@ -29,15 +29,11 @@ script(type="text/javascript").
       var reader = new FileReader();
       reader.onloadend = function() {
          var imgBase64 = reader.result;
-         $.ajax({
-            type: "POST",
-            url: "/upload-image",
-            contentType: 'application/json',
-            data: JSON.stringify({ imgBase64: imgBase64 })
-         }, function(data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
-            img.src = imgBase64;
-         });
+         $.post("/upload-image", { imgBase64: imgBase64 },
+                 function(data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                    img.src = data;
+                 });
       };
 
       if (file) {

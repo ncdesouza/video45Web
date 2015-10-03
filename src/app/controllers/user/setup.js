@@ -27,20 +27,24 @@ module.exports = function(app, passport, isLoggedIn, transporter) {
 
         var fileName = req.user.firstName + req.user.lastName;
         fileName = '/public/img/profile/' + fileName.replace(/\s+/g, '');
+        console.log(req.body);
         var imgBase64 = req.body.imgBase64.split(",")[1];
         var base64 = require('node-base64-image');
         var options = {filename: '..' + fileName};
         var imgData = new Buffer(imgBase64, 'base64');
         base64.base64decoder(imgData, options, function(err, saved) {
            if (err) { console.log(err); }
+
             console.log(saved);
+
+            req.user.profilePic = fileName + '.jpg';
+
+            req.user.save();
+
+            res.status(200).send(req.user.profilePic);
         });
 
-        req.user.profilePic = fileName + '.jpg';
 
-        req.user.save();
-
-        res.status(200).send('Done');
         
     });
 
