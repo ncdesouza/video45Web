@@ -19,7 +19,7 @@
       hr
       p
       .col-xs-3.col-sm-3
-      a(class= href='/setup') Skip
+      a(href='/profile') Skip
 
 script(type="text/javascript").
    var photo = document.getElementById("upload");
@@ -31,7 +31,6 @@ script(type="text/javascript").
          var imgBase64 = reader.result;
          $.post("/upload-image", { imgBase64: imgBase64 },
                  function(data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
                     img.src = data;
                  });
       };

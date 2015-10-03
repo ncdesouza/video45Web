@@ -13,12 +13,18 @@ module.exports = function(app, passport, isLoggedIn) {
             .findOne({ email: request.user.email })
             .exec(function(err, user) {
                 if (err) return console.log(err);
-                user.getVideos(function(err, videos) {
-                    console.log(videos);
-                    response.render('profile.jade', {
-                        videos : JSON.stringify(videos) // get user from session
+                if (user.videos.length != 0) {
+                    user.getVideos(function (err, videos) {
+                        console.log(videos);
+                        response.render('profile.jade', {
+                            videos: JSON.stringify(videos) // get user from session
+                        });
                     });
-                });
+                } else {
+                    response.render('profile.jade', {
+                        videos: null // get user from session
+                    });
+                }
             });
 
 

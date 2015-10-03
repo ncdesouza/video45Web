@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
     // Twitter =================================================================
     // =========================================================================
     // route for twitter authorization
-    app.get('/auth/twitter', passport.authenticate('twitter', {
+    app.get('/auth/twitter', passport.authenticate('twitter-auth', {
 
         successRedirect: '/setup',
         failureRedirect: '/'
@@ -60,9 +60,9 @@ module.exports = function(app, passport) {
     }));
 
     // route to handle callback from twitter
-    app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    app.get('/auth/twitter/callback', passport.authenticate('twitter-auth', {
 
-        successRedirect : '/profile',
+        successRedirect : '/setup',
         failureRedirect : '/'
 
     }));
@@ -72,14 +72,14 @@ module.exports = function(app, passport) {
     // Google  =================================================================
     // =========================================================================
     // route for twitter authorization
-    app.get('/auth/google', passport.authenticate('google', {
+    app.get('/auth/google', passport.authenticate('google-auth', {
 
         scope : ['profile', 'email']
 
     }));
 
     // route to handle callback from twitter
-    app.get('/auth/google/callback', passport.authenticate('google', {
+    app.get('/auth/google/callback', passport.authenticate('google-auth', {
 
         successRedirect : '/setup',
         failureRedirect : '/'

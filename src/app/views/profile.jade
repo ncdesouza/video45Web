@@ -13,7 +13,11 @@ block content
         .col-xs-5.col-md-5
             .container
 
+
         .col-xs-7.col-md-7
-            - each video in JSON.parse(videos)
-                .row
-                    include includes/videopost
+            if video != null
+                - each video in JSON.parse(videos)
+                    .row
+                        include includes/videopost
+            else
+                | Download the app to upload your first video
