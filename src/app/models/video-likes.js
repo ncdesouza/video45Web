@@ -11,4 +11,4 @@ var videoLikesSchema = new Schema({
 });
 
 
-module.exports = mongoose.Model('videoLike', videoLikesSchema);
+module.exports = mongoose.model('VideoLike', videoLikesSchema);

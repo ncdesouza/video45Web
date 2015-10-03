@@ -13,7 +13,8 @@
       .col-xs-8
         .b(style="font-size:25px") #{ video.title }
       .col-xs-4.text-right
-          a.fa.fa-heart-o.fa-2x(style="color: red" href="" id="like"+video._id)
+          - likeBtnId.push('like-'+video._id)
+          i.fa.fa-heart-o.fa-2x(style="color: red" href="" id="like-"+video._id)
       hr
       .panel-group
             .panel.panel-default
@@ -27,7 +28,8 @@
                         .col-xs-11.col-md-11
                             .b(style="font-size: 13px") #{ comment.author.firstName } #{ comment.author.lastName }
                             .b(style="font-size: 11px") #{ comment.comment }
-         .panel.panel-default
-            .panel-body
-                form(id=video._id)
-                    textarea.form-control(rows="1" style="resize: none" placeholder="Write a comment...")
+            .panel.panel-default
+                .panel-body
+                    form()
+                        - textBoxId.push(video._id)
+                        textarea.form-control.expanding-text(id=video._id rows="1" placeholder="Write a comment...")

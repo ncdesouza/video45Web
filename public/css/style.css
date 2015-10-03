@@ -91,3 +91,8 @@ hr.vertical-line {
 .navbar {
     margin-bottom: 0;
 }
+
+
+.expanding-text {
+    resize: none
+}

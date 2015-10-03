@@ -1,18 +1,18 @@
 var Comment = require('../../models/comment.js');
 var Video = require('../../models/video.js');
-module.exports = function(app) {
+module.exports = function(app, isLoggedIn) {
 
-    app.post('/comment/:videoId', function(req, res) {
+    app.post('/api/comment', isLoggedIn, function(req, res) {
 
             Video
-                .findById(req.param.videoId)
+                .findById(req.body.videoId)
                 .exec(function (err, video) {
                     if (err) throw err;
 
                     var comment = new Comment({
                         'author'  : req.user,
                         'comment' : req.body.comment,
-                        'date'    : new Date.now()
+                        'date'    : Date.now()
                     });
 
                     comment.save(function (err) {
@@ -20,7 +20,7 @@ module.exports = function(app) {
                         video.comments.push(comment);
                         video.save(function (err) {
                             if (err) throw err;
-                            res.send(comment);
+                            res.json(comment);
                         });
                     });
                 }

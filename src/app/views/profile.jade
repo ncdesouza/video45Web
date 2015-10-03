@@ -13,6 +13,8 @@ block content
         .col-xs-5.col-md-5
             .container
 
+        - var textBoxId = []
+        - var likeBtnId = []
 
         .col-xs-7.col-md-7
             if videos
@@ -21,3 +23,124 @@ block content
                         include includes/videopost
             else
                 | Download the app to upload your first video
+
+        script.
+            var observe;
+            if (window.attachEvent) {
+                observe = function (element, event, handler) {
+                    element.attachEvent('on' + event, handler);
+                };
+            } else {
+                observe = function (element, event, handler) {
+                   element.addEventListener(event, handler, false);
+                };
+            }
+
+            function initTBox(textbox) {
+                var text = document.getElementById(textbox);
+
+                function resize() {
+                    text.style.height = 'auto';
+                    text.style.height = text.scrollHeight + 'px';
+                    text.style.overflow = 'hidden'
+                }
+
+                /* 0-timeout to get the already changed text */
+                function delayedResize() {
+                    isKeyEnter()
+                    window.setTimeout(resize, 0);
+
+                }
+
+                function isKeyEnter() {
+                    if (window.event.keyCode == 13) {
+                        submitComment();
+                    }
+                }
+
+                function submitComment() {
+                   $.post("/api/comment", {
+                               videoId : text.id,
+                               comment : text.value
+                           }, function (data) {
+                               alert('Post Successful!' + data);
+                           });
+                }
+
+                observe(text, 'change', resize);
+                observe(text, 'cut', delayedResize);
+                observe(text, 'paste', delayedResize);
+                observe(text, 'drop', delayedResize);
+                observe(text, 'keydown', delayedResize);
+                resize();
+            }
+
+        each textbox, i in textBoxId
+            script.
+                initTBox("#{textbox}");
+
+        script.
+            var observe;
+            if (window.attachEvent) {
+                observe = function (element, event, handler) {
+                    element.attachEvent('on' + event, handler);
+                };
+            } else {
+                observe = function (element, event, handler) {
+                    element.addEventListener(event, handler, false);
+                };
+            }
+
+            function
+            initBtn(likeBtn) {
+
+                var btn = document.getElementById(likeBtn);
+
+                function
+                submit() {
+                    $.post("/api/like", {
+                        videoId : btn.id.split('-')[1]
+                    }, function (data) {
+                        if (data.action == 'added') {
+                            alert('added')
+                            btn.className = 'fa fa-heartbeat fa-2x';
+                        } else {
+                            alert('removed')
+                            btn.className = 'fa fa-heart-o fa-2x';
+                        }
+                    });
+                }
+
+                function
+                displayOption() {
+                    if(btn.className == 'fa fa-heart fa-2x') {
+                        btn.className = 'fa fa-heartbeat fa-2x';
+                    } else {
+                        btn.className = 'fa fa-heart-o fa-2x';
+                    }
+                }
+
+                function
+                switchValue() {
+                    if(btn.className == 'fa fa-heart-o fa-2x') {
+                        btn.className = 'fa fa-heart fa-2x';
+                    } else {
+                        btn.className = 'fa fa-heart-o fa-2x';
+                    }
+                }
+
+                observe(btn, 'click', submit);
+                //observe(btn, 'mouseenter', displayOption);
+                //observe(btn, 'mouseout', displayOption);
+            }
+
+        each likeBtn, i in likeBtnId
+            script.
+                initBtn("#{likeBtn}");
+
+
+
+
+
+
+
