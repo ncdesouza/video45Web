@@ -50,6 +50,30 @@ var video2 = new Video({
     description: 'Test video'
 });
 
+var video3 = new Video({
+    author: user1,
+    videoURL: '/public/vid/river.mp4',
+    date: new Date(2015, 9, 21),
+    title: 'Video3',
+    description: 'Test video'
+});
+
+var video4 = new Video({
+    author: user1,
+    videoURL: '/public/vid/dock.mp4',
+    date: new Date(2015, 9, 21),
+    title: 'Video4',
+    description: 'Test video'
+});
+
+var video5 = new Video({
+    author: user1,
+    videoURL: '/public/vid/river.mp4',
+    date: new Date(2015, 9, 21),
+    title: 'Video5',
+    description: 'Test video'
+});
+
 var comment1 = new Comment({
     author : user2,
     comment : 'Comment1',
@@ -62,43 +86,69 @@ var comment2 = new Comment({
     date    : new Date(2015, 9, 22)
 });
 
+var comment3 = new Comment({
+    author : user1,
+    comment : 'Comment3',
+    date    : new Date(2015, 9, 21)
+});
+
+var comment4 = new Comment({
+    author : user2,
+    comment : 'Comment4',
+    date    : new Date(2015, 9, 23)
+});
+
+var comment5 = new Comment({
+    author : user2,
+    comment : 'Comment5',
+    date    : new Date(2015, 9, 25)
+});
 
 
-//user1.save(callback);
-//user2.save(callback);
-//
+
+user1.save(callback);
+user2.save(callback);
+
 video1.comments.push(comment1);
+video1.comments.push(comment2);
+video1.comments.push(comment3);
+video1.comments.push(comment4);
+video1.comments.push(comment5);
+video3.comments.push(comment3);
+video4.comments.push(comment4);
+video5.comments.push(comment5);
 video2.comments.push(comment2);
-//
+
 comment1.save(callback);
 comment2.save(callback);
-//
+comment3.save(callback);
+comment4.save(callback);
+comment5.save(callback);
+
 video1.save(callback);
 video2.save(callback);
-//
-//user1.videos.push(video1);
-//user2.videos.push(video2);
-//
-//user1.save(callback);
-//user2.save(callback);
+video3.save(callback);
+video4.save(callback);
+video5.save(callback);
+
+user1.videos.push(video1);
+user1.videos.push(video3);
+user1.videos.push(video4);
+user1.videos.push(video5);
+
+user2.videos.push(video2);
+
+user1.save(callback);
+user2.save(callback);
 
 
-User
-    .findOne({ email: 'user1@test.com' })
-    .exec(function(err, user) {
-        if (err) return console.log(err);
-        video1.author = user;
-        video2.author = user;
-
-        video1.save(callback);
-        video2.save(callback);
-
-        user.videos.push(video1);
-        user.videos.push(video2);
-        user.save(callback);
-        //user.getVideos(function(err, videos) {
-        //    console.log(videos)
-        //});
-    });
+//User
+//    .findOne({ email: 'user1@test.com' })
+//    .exec(function(err, user) {
+//        if (err) return console.log(err);
+//        user.getVideos(function(err, videos) {
+//            console.log(videos)
+//        });
+//    });
 
 //console.log(user1);

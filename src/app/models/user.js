@@ -50,30 +50,35 @@ userSchema.methods.validPassword = function(password) {
 
 userSchema.methods.getVideos = function(callback) {
     var videos = [];
-    async.forEach(this.videos, function(videoItem) {
+    var originalVideos = this.videos;
+    async.forEach(this.videos, function (videoItem) {
         mongoose.model('Video').findById(videoItem)
             .populate('author')
             .lean()
             .exec(function (err, video) {
-            if (err) throw err;
-            var comments = [];
-            async.forEach(video.comments, function (commentItem) {
-                mongoose.model('Comment').findById(commentItem)
-                    .populate('author')
-                    .lean()
-                    .exec(function(err, comment) {
-                        //comment.findAuthor(function(err, author) {
-                        comments.push(comment);
-                        video.comments = comments;
-                        videos.push(video);
-
-                        callback(null, videos);
-                        //console.log(comment);
-                        //console.log(author);
-                    //})
+                if (err) throw err;
+                var comments = [];
+                var originalComments = video.comments;
+                async.forEach(video.comments, function (commentItem) {
+                    mongoose.model('Comment').findById(commentItem)
+                        .populate('author')
+                        //.lean()
+                        .exec(function (err, comment) {
+                            //comment.findAuthor(function(err, author) {
+                            comments.push(comment);
+                            if (originalComments.indexOf(commentItem) == originalComments.length-1) {
+                                video.comments = comments;
+                                videos.push(video);
+                            }
+                            if (originalVideos.indexOf(videoItem) == originalVideos.length -1) {
+                                callback(null, videos);
+                            }
+                            //console.log(comment);
+                            //console.log(author);
+                            //})
+                        });
                 });
             });
-        });
     });
 };
 

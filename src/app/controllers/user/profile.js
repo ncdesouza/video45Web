@@ -16,7 +16,7 @@ module.exports = function(app, passport, isLoggedIn) {
                 user.getVideos(function(err, videos) {
                     console.log(videos);
                     response.render('profile.jade', {
-                        videos : videos // get user from session
+                        videos : JSON.stringify(videos) // get user from session
                     });
                 });
             });

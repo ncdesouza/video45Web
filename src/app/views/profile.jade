@@ -1,5 +1,4 @@
 extends ./layouts/mainLayout
-
 block content
     .carousel#topCarousel(data-ride="carousel")
         ol.carousel-indicators
@@ -11,10 +10,10 @@ block content
                 video.first-slide.scale-item(preload="auto" height="100%" autoplay src="/public/vid/dock.mp4" loop)
 
     .container-fluid.centered
-        .col-xs-4.col-md-4
+        .col-xs-5.col-md-5
             .container
 
-        .col-xs-8.col-md-8
-            for video in videos
+        .col-xs-7.col-md-7
+            - each video in JSON.parse(videos)
                 .row
                     include includes/videopost
