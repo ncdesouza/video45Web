@@ -6,6 +6,7 @@
     "db:view": "nodejs node_modules/mongo-express/app"
   },
   "dependencies": {
+    "async": "^1.4.2",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",

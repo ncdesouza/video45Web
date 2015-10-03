@@ -9,20 +9,21 @@ module.exports = function(app, passport, isLoggedIn) {
     // Profile =================================================================
     // =========================================================================
     app.get('/profile', isLoggedIn, function(request, response) {
-        User.findOne({ email: request.user.email })
-            .populate('videos.author')
+        User
+            .findOne({ email: request.user.email })
             .exec(function(err, user) {
                 if (err) return console.log(err);
-                console.log(user);
+                user.getVideos(function(err, videos) {
+                    console.log(videos);
+                    response.render('profile.jade', {
+                        videos : videos // get user from session
+                    });
+                });
             });
 
 
 
-        response.render('profile.jade', {
 
-            user : request.user // get user from session
-
-        });
 
     });
 

@@ -18,7 +18,7 @@ var upload = require('multer')({ dest: '../public/uploads'});
 var configDB = require('./config/database.js');
 
 // config ======================================================================
-mongoose.connect(configDB.url); // connect to db
+mongoose.connect(configDB.urlDev); // connect to db
 
 require('./config/passport')(passport); // pass passport for config
 var transporter = require('./config/email')(nodemailer); // pass nodemailer for config

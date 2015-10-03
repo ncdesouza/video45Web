@@ -12,6 +12,12 @@ var commentSchema = Schema({
     likes       : [{ type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
+commentSchema.methods.findAuthor = function(callback) {
+    return this.model('User').findById(this.author)
+        .lean()
+        .exec(callback);
+};
+
 // export model ================================================================
 module.exports = mongoose.model('Comment', commentSchema);
 

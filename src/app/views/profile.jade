@@ -15,7 +15,6 @@ block content
             .container
 
         .col-xs-8.col-md-8
-            for video in user.videos
-                - var comments = video.comments
+            for video in videos
                 .row
                     include includes/videopost

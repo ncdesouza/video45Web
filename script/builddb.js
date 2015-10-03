@@ -5,7 +5,7 @@
 // connect to db
 var mongoose = require('mongoose');
 var configDB = require('../src/config/database');
-mongoose.connect(configDB.url); // connect to db
+mongoose.connect(configDB.urlDev); // connect to db
 
 var User = require('../src/app/models/user');
 var Video = require('../src/app/models/video');
@@ -67,14 +67,14 @@ var comment2 = new Comment({
 //user1.save(callback);
 //user2.save(callback);
 //
-//video1.comments.push(comment1);
-//video2.comments.push(comment2);
+video1.comments.push(comment1);
+video2.comments.push(comment2);
 //
-//comment1.save(callback);
-//comment2.save(callback);
+comment1.save(callback);
+comment2.save(callback);
 //
-//video1.save(callback);
-//video2.save(callback);
+video1.save(callback);
+video2.save(callback);
 //
 //user1.videos.push(video1);
 //user2.videos.push(video2);
@@ -85,17 +85,20 @@ var comment2 = new Comment({
 
 User
     .findOne({ email: 'user1@test.com' })
-    .deepPopulate(['videos','videos.comments'])
     .exec(function(err, user) {
         if (err) return console.log(err);
-        console.log(user);
-    //    user.videos.forEach(function (video) {
-    //        Video.populate(video.comments, { path: "comments", model: "Comment"}, function(err, output) {
-    //            if (err) throw err;
-    //            console.log(video);
-    //            console.log()
-    //        });
-    //    });
+        video1.author = user;
+        video2.author = user;
+
+        video1.save(callback);
+        video2.save(callback);
+
+        user.videos.push(video1);
+        user.videos.push(video2);
+        user.save(callback);
+        //user.getVideos(function(err, videos) {
+        //    console.log(videos)
+        //});
     });
 
 //console.log(user1);

@@ -48,9 +48,32 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
-userSchema.methods.getVideos = function(err, callback) {
-    async.forEach(this.videos, function(video) {
-        this.model('Video').findById(video)
+userSchema.methods.getVideos = function(callback) {
+    var videos = [];
+    async.forEach(this.videos, function(videoItem) {
+        mongoose.model('Video').findById(videoItem)
+            .populate('author')
+            .lean()
+            .exec(function (err, video) {
+            if (err) throw err;
+            var comments = [];
+            async.forEach(video.comments, function (commentItem) {
+                mongoose.model('Comment').findById(commentItem)
+                    .populate('author')
+                    .lean()
+                    .exec(function(err, comment) {
+                        //comment.findAuthor(function(err, author) {
+                        comments.push(comment);
+                        video.comments = comments;
+                        videos.push(video);
+
+                        callback(null, videos);
+                        //console.log(comment);
+                        //console.log(author);
+                    //})
+                });
+            });
+        });
     });
 };
 
