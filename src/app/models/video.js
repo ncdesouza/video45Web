@@ -12,7 +12,7 @@ var videoSchema = Schema({
     date        : Date,
     title       : String,
     description : String,
-    likes       : [{type: Schema.Types.ObjectId, ref: 'User'}],
+    likes       : {type:Number, default:0},
     views       : {type: Number, default: 0},
     comments    : [{type: Schema.Types.ObjectId, ref: 'Comments'}]
 });

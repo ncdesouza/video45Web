@@ -6,19 +6,19 @@
                img.img-thumbnail(width="50px"  src=video.author.profilePic)
             .col-xs-8.col-md-8
                h3(style="margin-top: 0;"): a(href="") #{ video.author.firstName } #{ video.author.lastName }
-               h5(style="margin-top: 0; margin-bottom: 0") #[small Sep 21, 2015]
+               h5(style="margin-top: 0;") #[small Sep 21, 2015]
 
       video(preload="auto" width="100%" src=video.videoURL controls)
       br
       .col-xs-8
         .b(style="font-size:25px") #{ video.title }
       .col-xs-4.text-right
-          a.fa.fa-heart-o.fa-2x(style="color: red" href="")
+          a.fa.fa-heart-o.fa-2x(style="color: red" href="" id="like"+video._id)
       hr
       .panel-group
             .panel.panel-default
                 - var collapseId = "collapse" + video._id
-                a(data-toggle="collapse" role="button" href="#"+collapseId aria-expanded="false" aria-controls=collapseId): span.fa.fa-caret-right: b(style="font-size:10px") view comments
+                a(style="margin-left: 1em" data-toggle="collapse" role="button" href="#"+collapseId aria-expanded="false" aria-controls=collapseId): span.fa.fa-caret-right: b(style="font-size:11px")  view comments
                .panel-collapse.collapse(id=collapseId)
                   - each comment in video.comments
                     .panel-body
@@ -30,4 +30,4 @@
          .panel.panel-default
             .panel-body
                 form(id=video._id)
-                    textarea.form-control(rows="1" placeholder="Write a comment...")
+                    textarea.form-control(rows="1" style="resize: none" placeholder="Write a comment...")
