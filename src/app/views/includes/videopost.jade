@@ -19,15 +19,14 @@
             .panel.panel-default
                 - var collapseId = "collapse" + video._id
                 a(data-toggle="collapse" role="button" href="#"+collapseId aria-expanded="false" aria-controls=collapseId): span.fa.fa-caret-right: b(style="font-size:10px") view comments
-               .panel-collapse.collapse(id=collapseId style="padding-top 0; margin-bottom:0")
+               .panel-collapse.collapse(id=collapseId)
                   - each comment in video.comments
-                     ul.list-group
-                         li.list-group-item
-                            .col-xs-1.col-md-1.text-center
-                                img.img-circle(width="35px" src=comment.author.profilePic)
-                            .col-xs-10.col-md-10
-                                .b(style="font-size: 13px") #{ comment.author.firstName } #{ comment.author.lastName }
-                                .b(style="font-size: 11px") #{ comment.comment }
+                    .panel-body
+                        .col-xs-1.col-md-1.text-center
+                            img.img-circle(width="35px" src=comment.author.profilePic)
+                        .col-xs-11.col-md-11
+                            .b(style="font-size: 13px") #{ comment.author.firstName } #{ comment.author.lastName }
+                            .b(style="font-size: 11px") #{ comment.comment }
          .panel.panel-default
             .panel-body
                 form(id=video._id)
