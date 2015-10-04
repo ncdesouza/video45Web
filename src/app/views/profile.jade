@@ -54,17 +54,21 @@ block content
 
                 function isKeyEnter() {
                     if (window.event.keyCode == 13) {
-                        submitComment();
+                        event.preventDefault();
+                        if (text.value !== '') {
+                            submitComment();
+                        }
                     }
                 }
 
                 function submitComment() {
-                   $.post("/api/comment", {
-                               videoId : text.id,
-                               comment : text.value
-                           }, function (data) {
-                               alert('Post Successful!' + data);
-                           });
+                    $.post("/api/comment", {
+                        videoId : text.id,
+                        comment : text.value
+                    }, function (data) {
+                        text.value = '';
+                        resize();
+                    });
                 }
 
                 observe(text, 'change', resize);
@@ -102,10 +106,8 @@ block content
                         videoId : btn.id.split('-')[1]
                     }, function (data) {
                         if (data.action == 'added') {
-                            alert('added')
                             btn.className = 'fa fa-heartbeat fa-2x';
                         } else {
-                            alert('removed')
                             btn.className = 'fa fa-heart-o fa-2x';
                         }
                     });

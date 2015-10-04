@@ -106,49 +106,82 @@ var comment5 = new Comment({
 
 
 
-user1.save(callback);
-user2.save(callback);
+//user1.save(callback);
+//user2.save(callback);
+//
+//video1.comments.push(comment1);
+//video1.comments.push(comment2);
+//video1.comments.push(comment3);
+//video1.comments.push(comment4);
+//video1.comments.push(comment5);
+//video3.comments.push(comment3);
+//video4.comments.push(comment4);
+//video5.comments.push(comment5);
+//video2.comments.push(comment2);
+//
+//comment1.save(callback);
+//comment2.save(callback);
+//comment3.save(callback);
+//comment4.save(callback);
+//comment5.save(callback);
+//
+//video1.save(callback);
+//video2.save(callback);
+//video3.save(callback);
+//video4.save(callback);
+//video5.save(callback);
+//
+//user1.videos.push(video1);
+//user1.videos.push(video3);
+//user1.videos.push(video4);
+//user1.videos.push(video5);
+//
+//user2.videos.push(video2);
+//
+//user1.save(callback);
+//user2.save(callback);
 
-video1.comments.push(comment1);
-video1.comments.push(comment2);
-video1.comments.push(comment3);
-video1.comments.push(comment4);
-video1.comments.push(comment5);
-video3.comments.push(comment3);
-video4.comments.push(comment4);
-video5.comments.push(comment5);
-video2.comments.push(comment2);
-
-comment1.save(callback);
-comment2.save(callback);
-comment3.save(callback);
-comment4.save(callback);
-comment5.save(callback);
-
-video1.save(callback);
-video2.save(callback);
-video3.save(callback);
-video4.save(callback);
-video5.save(callback);
-
-user1.videos.push(video1);
-user1.videos.push(video3);
-user1.videos.push(video4);
-user1.videos.push(video5);
-
-user2.videos.push(video2);
-
-user1.save(callback);
-user2.save(callback);
-
-
-//User
-//    .findOne({ email: 'user1@test.com' })
-//    .exec(function(err, user) {
-//        if (err) return console.log(err);
-//        user.getVideos(function(err, videos) {
-//            console.log(videos)
-//        });
+//.exec(function(err, user) {
+//    if (err) return console.log(err);
+//    user.getVideos(function(err, videos) {
+//        console.log(videos)
 //    });
+//});
 
-//console.log(user1);
+User
+    .findOne({ email: 'user1@test.com' })
+    .populate('videos')
+    .exec(function (err, user) {
+        if (err) throw err;
+
+        getVideos(user);
+        closeDB()
+    });
+
+
+function
+getVideos(user) {
+    for(var i = 0; i < user.videos.length; i++) {
+        var video = user.videos[i];
+        //video = video.toObject();
+        //console.log(video instanceof mongoose.Document);
+        var likeIndex = video.likes.indexOf(user._id);
+        console.log(likeIndex);
+        if(likeIndex > -1) {
+            Video.update( { _id : video._id }, {$pull : { likes: user.id }}, function (err) {
+                console.log('Removed Like')
+            });
+            //video.save(function(err) {
+            //    if(err) throw err;
+            //    console.log('removed ' + user._id);
+            //});
+        //console.log(video);
+        }
+    }
+}
+
+
+function
+closeDB() {
+    mongoose.connection.close();
+}

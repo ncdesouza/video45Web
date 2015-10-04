@@ -2,6 +2,7 @@
 
 // load dependencies
 var mongoose = require('mongoose');
+var async = require('async');
 var Schema = mongoose.Schema;
 require('./comment');
 var commentSchema = mongoose.model('Comment').schema;
@@ -12,13 +13,19 @@ var videoSchema = Schema({
     date        : Date,
     title       : String,
     description : String,
-    likes       : {type:Number, default:0},
+    likes       : [{ type: Schema.Types.ObjectId, ref: 'User' }],
     views       : {type: Number, default: 0},
-    comments    : [{type: Schema.Types.ObjectId, ref: 'Comments'}]
+    comments    : [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 });
 
-//var deepPopulate = require('moongoose-deep-populate')(mongoose);
-//videoSchema.plugin(deepPopulate);
+videoSchema.methods.findLikesById = function (userId, callback) {
+    var index = this.likes.indexOf(userId);
+    if (index > -1) {
+        return callback(null, userId);
+    }
+    return callback(null, null);
+};
+
 // export model ================================================================
 module.exports = mongoose.model('Video', videoSchema);
 

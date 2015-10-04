@@ -67,10 +67,26 @@ userSchema.methods.getVideos = function(callback) {
                             //comment.findAuthor(function(err, author) {
                             comments.push(comment);
                             if (originalComments.indexOf(commentItem) == originalComments.length-1) {
+                                comments.sort(function(a, b){
+                                    var keyA = new Date(a.date),
+                                        keyB = new Date(b.date);
+                                    // Compare the 2 dates
+                                    if(keyA < keyB) return 1;
+                                    if(keyA > keyB) return -1;
+                                    return 0;
+                                });
                                 video.comments = comments;
                                 videos.push(video);
                             }
                             if (originalVideos.indexOf(videoItem) == originalVideos.length -1) {
+                                videos.sort(function(a, b){
+                                    var keyA = new Date(a.date),
+                                        keyB = new Date(b.date);
+                                    // Compare the 2 dates
+                                    if(keyA < keyB) return 1;
+                                    if(keyA > keyB) return -1;
+                                    return 0;
+                                });
                                 callback(null, videos);
                             }
                             //console.log(comment);
