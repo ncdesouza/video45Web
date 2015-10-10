@@ -1,0 +1,134 @@
+[
+  {
+    "email": "user1@test.com",
+    "password": "test",
+    "firstName": "user",
+    "lastName": "1"
+  },
+  {
+    "email": "user2@test.com",
+    "password": "test",
+    "firstName": "user",
+    "lastName": "2"
+  },
+  {
+    "firstName": "Macey",
+    "lastName": "Treutel",
+    "password": "test",
+    "email": "Sean_Schulist@eric.tv"
+  },
+  {
+    "firstName": "Maritza",
+    "lastName": "Gorczany",
+    "password": "test",
+    "email": "Clotilde@roselyn.net"
+  },
+  {
+    "firstName": "Raphaelle",
+    "lastName": "Ryan",
+    "password": "test",
+    "email": "Greta@xzavier.org"
+  },
+  {
+    "firstName": "Dillon",
+    "lastName": "Fadel",
+    "password": "test",
+    "email": "Eddie.Smith@kellie.ca"
+  },
+  {
+    "firstName": "Elta",
+    "lastName": "O'Hara",
+    "password": "test",
+    "email": "Derrick_OKon@vesta.me"
+  },
+  {
+    "firstName": "Jamar",
+    "lastName": "Walker",
+    "password": "test",
+    "email": "Adell@kenna.ca"
+  },
+  {
+    "firstName": "Christy",
+    "lastName": "Emard",
+    "password": "test",
+    "email": "Samson_Jewess@nettie.info"
+  },
+  {
+    "firstName": "Carole",
+    "lastName": "Hauck",
+    "password": "test",
+    "email": "Bulah@ned.us"
+  },
+  {
+    "firstName": "Colleen",
+    "lastName": "Gusikowski",
+    "password": "test",
+    "email": "Angela.Zulauf@eleanore.us"
+  },
+  {
+    "firstName": "Triston",
+    "lastName": "D'Amore",
+    "password": "test",
+    "email": "Ludie@eldred.co.uk"
+  },
+  {
+    "firstName": "Sally",
+    "lastName": "Koch",
+    "password": "test",
+    "email": "Alvis@tressa.ca"
+  },
+  {
+    "firstName": "Esmeralda",
+    "lastName": "Gaylord",
+    "password": "test",
+    "email": "Linwood@danny.name"
+  },
+  {
+    "firstName": "Emerald",
+    "lastName": "Olson",
+    "password": "test",
+    "email": "Isobel_Langosh@ezra.info"
+  },
+  {
+    "firstName": "Teagan",
+    "lastName": "Kuhic",
+    "password": "test",
+    "email": "Morton@art.biz"
+  },
+  {
+    "firstName": "Lia",
+    "lastName": "Lindgren",
+    "password": "test",
+    "email": "Lue.Sporer@rosalyn.name"
+  },
+  {
+    "firstName": "Delphine",
+    "lastName": "Moen",
+    "password": "test",
+    "email": "Coy@xavier.us"
+  },
+  {
+    "firstName": "Abbigail",
+    "lastName": "Wintheiser",
+    "password": "test",
+    "email": "Merritt.Bednar@brionna.net"
+  },
+  {
+    "firstName": "Patrick",
+    "lastName": "Adams",
+    "password": "test",
+    "email": "Nora.Stracke@dashawn.biz"
+  },
+  {
+    "firstName": "D'angelo",
+    "lastName": "Weber",
+    "password": "test",
+    "email": "Samson.Ullrich@olen.me"
+  },
+  {
+    "firstName": "Candida",
+    "lastName": "Anderson",
+    "password": "test",
+    "email": "Marcellus.Greenfelder@sammy.io"
+  }
+]

@@ -1,20 +1,57 @@
 /**
  * Created by nicholas on 29/09/15.
  */
+// imports
+var Promise = require('promise');
 
 // connect to db
 var mongoose = require('mongoose');
 var configDB = require('../src/config/database');
 mongoose.connect(configDB.urlDev); // connect to db
 
+// get db models
 var User = require('../src/app/models/user');
 var Video = require('../src/app/models/video');
 var Comment = require('../src/app/models/comment');
 
-function callback(err) {
-    if (err) return console.log(err);
-}
+// get test data
+var usersData = require('./users.json');
+var videosData = require('./videos.json');
+var commentsData = require('./comments.json');
 
+//function
+//buildUsers() {
+//    return new Promise(function (fulfill, reject) {
+//        var users = [];
+//        for (var i = 0; i < usersData.length; i++) {
+//            var user = new User(usersData[i]);
+//            user.generateHash('test');
+//            user.save(function(err) {
+//                if (err) throw err;
+//                console.log('New user created: ' + this.firstName + ' ' + this.lastName);
+//                users.push(this);
+//            });
+//        }
+//    });
+//}
+//
+//function
+//saveUser() {
+//    return new Promise(function (fulfill, reject) {
+//        user.save(function(err) {
+//            if (err) throw err;
+//            console.log('New user created: ' + this.firstName + ' ' + this.lastName);
+//            users.push(this);
+//        });
+//    });
+//}
+//
+
+
+//function callback(err) {
+//    if (err) return console.log(err);
+//}
+//
 var user1 = new User({
     email: 'user1@test.com',
     password: 'test',
@@ -106,78 +143,83 @@ var comment5 = new Comment({
 
 
 
-//user1.save(callback);
-//user2.save(callback);
-//
-//video1.comments.push(comment1);
-//video1.comments.push(comment2);
-//video1.comments.push(comment3);
-//video1.comments.push(comment4);
-//video1.comments.push(comment5);
-//video3.comments.push(comment3);
-//video4.comments.push(comment4);
-//video5.comments.push(comment5);
-//video2.comments.push(comment2);
-//
-//comment1.save(callback);
-//comment2.save(callback);
-//comment3.save(callback);
-//comment4.save(callback);
-//comment5.save(callback);
-//
-//video1.save(callback);
-//video2.save(callback);
-//video3.save(callback);
-//video4.save(callback);
-//video5.save(callback);
-//
-//user1.videos.push(video1);
-//user1.videos.push(video3);
-//user1.videos.push(video4);
-//user1.videos.push(video5);
-//
-//user2.videos.push(video2);
-//
-//user1.save(callback);
-//user2.save(callback);
+user1.save(callback);
+user2.save(callback);
 
-//.exec(function(err, user) {
-//    if (err) return console.log(err);
-//    user.getVideos(function(err, videos) {
-//        console.log(videos)
+video1.comments.push(comment1);
+video1.comments.push(comment2);
+video1.comments.push(comment3);
+video1.comments.push(comment4);
+video1.comments.push(comment5);
+video3.comments.push(comment3);
+video4.comments.push(comment4);
+video5.comments.push(comment5);
+video2.comments.push(comment2);
+
+comment1.save(callback);
+comment2.save(callback);
+comment3.save(callback);
+comment4.save(callback);
+comment5.save(callback);
+
+video1.save(callback);
+video2.save(callback);
+video3.save(callback);
+video4.save(callback);
+video5.save(callback);
+
+user1.videos.push(video1);
+user1.videos.push(video3);
+user1.videos.push(video4);
+user1.videos.push(video5);
+
+user2.videos.push(video2);
+
+user1.save(callback);
+user2.save(callback);
+
+////.exec(function(err, user) {
+////    if (err) return console.log(err);
+////    user.getVideos(function(err, videos) {
+////        console.log(videos)
+////    });
+////});
+//
+//User
+//    .findOne({ email: 'user1@test.com' })
+//    .populate('videos')
+//    .exec(function (err, user) {
+//        if (err) throw err;
+//
+//        getVideos(user);
+//        closeDB()
 //    });
-//});
-
-User
-    .findOne({ email: 'user1@test.com' })
-    .populate('videos')
-    .exec(function (err, user) {
-        if (err) throw err;
-
-        getVideos(user);
-        closeDB()
-    });
-
+//
+//
+//function
+//getVideos(user) {
+//    for(var i = 0; i < user.videos.length; i++) {
+//        var video = user.videos[i];
+//        //video = video.toObject();
+//        //console.log(video instanceof mongoose.Document);
+//        var likeIndex = video.likes.indexOf(user._id);
+//        console.log(likeIndex);
+//        if(likeIndex > -1) {
+//            Video.update( { _id : video._id }, {$pull : { likes: user.id }}, function (err) {
+//                console.log('Removed Like')
+//            });
+//            //video.save(function(err) {
+//            //    if(err) throw err;
+//            //    console.log('removed ' + user._id);
+//            //});
+//        //console.log(video);
+//        }
+//    }
+//}
 
 function
-getVideos(user) {
-    for(var i = 0; i < user.videos.length; i++) {
-        var video = user.videos[i];
-        //video = video.toObject();
-        //console.log(video instanceof mongoose.Document);
-        var likeIndex = video.likes.indexOf(user._id);
-        console.log(likeIndex);
-        if(likeIndex > -1) {
-            Video.update( { _id : video._id }, {$pull : { likes: user.id }}, function (err) {
-                console.log('Removed Like')
-            });
-            //video.save(function(err) {
-            //    if(err) throw err;
-            //    console.log('removed ' + user._id);
-            //});
-        //console.log(video);
-        }
-    }
+callback(err) {
+    if (err) throw err;
 }
 
 

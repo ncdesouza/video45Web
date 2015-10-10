@@ -140,6 +140,39 @@ block content
             script.
                 initBtn("#{likeBtn}");
 
+    script.
+        function playThis(video) {
+            video[0].muted = true;
+            video[0].play();
+        }
+
+        function pauseThis(video) {
+            video[0].pause();
+        }
+
+
+        $(window).scroll(function () {
+            clearTimeout($.data(this, 'scrollTimer'));
+            $.data(this, 'scrollTimer', setTimeout(function () {
+                // do something
+                isScrolledIntoView();
+            }, 250));
+        });
+
+        function isScrolledIntoView() {
+            $('.auto-play').each(function () {
+                var docViewTop = $(window).scrollTop();
+                var docViewBottom = docViewTop + $(window).height();
+                var elemTop = $(this).offset().top;
+                var elemBottom = elemTop + $(this).height();
+                if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop)) {
+                    playThis($(this));
+                } else {
+                    pauseThis($(this));
+                }
+            });
+        }
+
 
 
 
