@@ -56,7 +56,8 @@ var user1 = new User({
     email: 'user1@test.com',
     password: 'test',
     firstName: 'user1',
-    lastName: 'test'
+    lastName: 'test',
+    username: 'user1'
 });
 
 user1.password = user1.generateHash('test');
@@ -65,7 +66,8 @@ var user2 = new User({
     email: 'user2@test.com',
     password: 'test',
     firstName: 'user2',
-    lastName: 'test'
+    lastName: 'test',
+    username: 'user2'
 });
 
 user2.password = user2.generateHash('test');
@@ -82,7 +84,7 @@ var video1 = new Video({
 var video2 = new Video({
     author: user2,
     videoURL: '/public/vid/river.mp4',
-    date: new Date(2015, 9, 21),
+    date: new Date(2015, 9, 22),
     title: 'Video2',
     description: 'Test video'
 });
@@ -90,7 +92,7 @@ var video2 = new Video({
 var video3 = new Video({
     author: user1,
     videoURL: '/public/vid/river.mp4',
-    date: new Date(2015, 9, 21),
+    date: new Date(2015, 9, 23),
     title: 'Video3',
     description: 'Test video'
 });
@@ -98,7 +100,7 @@ var video3 = new Video({
 var video4 = new Video({
     author: user1,
     videoURL: '/public/vid/dock.mp4',
-    date: new Date(2015, 9, 21),
+    date: new Date(2015, 9, 24),
     title: 'Video4',
     description: 'Test video'
 });
@@ -106,7 +108,7 @@ var video4 = new Video({
 var video5 = new Video({
     author: user1,
     videoURL: '/public/vid/river.mp4',
-    date: new Date(2015, 9, 21),
+    date: new Date(2015, 9, 25),
     title: 'Video5',
     description: 'Test video'
 });
@@ -126,13 +128,13 @@ var comment2 = new Comment({
 var comment3 = new Comment({
     author : user1,
     comment : 'Comment3',
-    date    : new Date(2015, 9, 21)
+    date    : new Date(2015, 9, 23)
 });
 
 var comment4 = new Comment({
     author : user2,
     comment : 'Comment4',
-    date    : new Date(2015, 9, 23)
+    date    : new Date(2015, 9, 24)
 });
 
 var comment5 = new Comment({
@@ -178,44 +180,6 @@ user2.videos.push(video2);
 user1.save(callback);
 user2.save(callback);
 
-////.exec(function(err, user) {
-////    if (err) return console.log(err);
-////    user.getVideos(function(err, videos) {
-////        console.log(videos)
-////    });
-////});
-//
-//User
-//    .findOne({ email: 'user1@test.com' })
-//    .populate('videos')
-//    .exec(function (err, user) {
-//        if (err) throw err;
-//
-//        getVideos(user);
-//        closeDB()
-//    });
-//
-//
-//function
-//getVideos(user) {
-//    for(var i = 0; i < user.videos.length; i++) {
-//        var video = user.videos[i];
-//        //video = video.toObject();
-//        //console.log(video instanceof mongoose.Document);
-//        var likeIndex = video.likes.indexOf(user._id);
-//        console.log(likeIndex);
-//        if(likeIndex > -1) {
-//            Video.update( { _id : video._id }, {$pull : { likes: user.id }}, function (err) {
-//                console.log('Removed Like')
-//            });
-//            //video.save(function(err) {
-//            //    if(err) throw err;
-//            //    console.log('removed ' + user._id);
-//            //});
-//        //console.log(video);
-//        }
-//    }
-//}
 
 function
 callback(err) {

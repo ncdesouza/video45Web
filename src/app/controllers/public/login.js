@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
     // =========================================================================
     app.post('/', passport.authenticate('login', {
 
-        successRedirect : '/profile', // redirect to profile
+        successRedirect : '/', // redirect to profile
         failureRedirect : '/', // redirect to login
         failureFlash : true
 
@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
     // process the login form
     app.post('/login', passport.authenticate('login', {
 
-        successRedirect : '/profile', // redirect to profile
+        successRedirect : '/', // redirect to profile
         failureRedirect : '/', // redirect to login
         failureFlash : true
 

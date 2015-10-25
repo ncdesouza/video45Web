@@ -2,11 +2,11 @@
    .panel-body
       .panel.panel-default(style="margin-bottom: 0")
          .panel-body(style="padding-bottom: 0")
-            .col-xs-2.col-md-2.text-center
-               img.img-thumbnail(width="50px"  src=video.author.profilePic)
-            .col-xs-8.col-md-8
-               h3(style="margin-top: 0;"): a(href="") #{ video.author.firstName } #{ video.author.lastName }
-               h5(style="margin-top: 0;") #[small Sep 21, 2015]
+            .col-xs-3.col-md-2.text-center
+               img.img-thumbnail(width="50px" src=video.author.profilePic)
+            .col-xs-9.col-md-10
+               h3(style="margin-top: 0;"): a(href='/' + '#{ video.author.username }') #{ video.author.username }
+               h5(style="margin-top: 0;") #[small #{video.date}]
 
       video(class="auto-play" preload="auto" width="100%" src=video.videoURL)
       br
@@ -14,8 +14,12 @@
         .b(style="font-size:25px") #{ video.title }
       .col-xs-4.text-right
           - likeBtnId.push('like-'+video._id)
-          i.fa.fa-heart-o.fa-2x(style="color: red" href="" id="like-"+video._id)
-      hr
+          if video.liked
+            i.fa.fa-heartbeat.fa-2x(style="color: red" href="" id="like-"+video._id)
+          else
+            i.fa.fa-heart-o.fa-2x(style="color: red" href="" id="like-" + video._id)
+
+       hr
       .panel-group
             .panel.panel-default
                 - var collapseId = "collapse" + video._id
@@ -26,7 +30,7 @@
                         .col-xs-1.col-md-1.text-center
                             img.img-circle(width="35px" src=comment.author.profilePic)
                         .col-xs-11.col-md-11
-                            .a(style="font-size: 13px") #{ comment.author.firstName } #{ comment.author.lastName }
+                            a(style="font-size: 13px" href='/' + '#{ comment.author.username }') #{ comment.author.username }
                             .b.inline(style="font-size: 11px") #{ comment.comment }
             .panel.panel-default
                 .panel-body

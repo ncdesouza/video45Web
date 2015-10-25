@@ -49,53 +49,31 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.methods.getVideos = function(callback) {
-    var videos = [];
-    var originalVideos = this.videos;
-    async.forEach(this.videos, function (videoItem) {
-        mongoose.model('Video').findById(videoItem)
-            .populate('author')
-            .lean()
-            .exec(function (err, video) {
-                if (err) throw err;
-                var comments = [];
-                var originalComments = video.comments;
-                async.forEach(video.comments, function (commentItem) {
-                    mongoose.model('Comment').findById(commentItem)
-                        .populate('author')
-                        //.lean()
-                        .exec(function (err, comment) {
-                            //comment.findAuthor(function(err, author) {
-                            comments.push(comment);
-                            if (originalComments.indexOf(commentItem) == originalComments.length-1) {
-                                comments.sort(function(a, b){
-                                    var keyA = new Date(a.date),
-                                        keyB = new Date(b.date);
-                                    // Compare the 2 dates
-                                    if(keyA < keyB) return 1;
-                                    if(keyA > keyB) return -1;
-                                    return 0;
-                                });
-                                video.comments = comments;
-                                videos.push(video);
-                            }
-                            if (originalVideos.indexOf(videoItem) == originalVideos.length -1) {
-                                videos.sort(function(a, b){
-                                    var keyA = new Date(a.date),
-                                        keyB = new Date(b.date);
-                                    // Compare the 2 dates
-                                    if(keyA < keyB) return 1;
-                                    if(keyA > keyB) return -1;
-                                    return 0;
-                                });
-                                callback(null, videos);
-                            }
-                            //console.log(comment);
-                            //console.log(author);
-                            //})
-                        });
+    this.model('User')
+        .findOne({ email: this.email })
+        .populate({path: 'videos', options: {sort: {date: -1}}})
+        .exec(function(err, doc) {
+            doc.populate({
+                path: 'videos.author',
+                select: '-_id -videos -google -twitter -facebook -password -email',
+                model: 'User'
+            }, function(err, doc) {
+                doc.populate({
+                    path: 'videos.comments',
+                    model: 'Comment',
+                    options: {sort: {date: 1}}
+                }, function (err, doc) {
+                    doc.populate({
+                        path: 'videos.comments.author',
+                        select: '-_id -videos -google -twitter -facebook -password -email',
+                        model: 'User'
+                    }, function (err, doc) {
+                        callback(null, doc);
+                    });
                 });
             });
-    });
+        }
+    );
 };
 
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
@@ -103,5 +81,3 @@ userSchema.plugin(deepPopulate, { whitelist: ['videos', 'comment']});
 
 // export model ================================================================
 module.exports = mongoose.model('User', userSchema);
-
-

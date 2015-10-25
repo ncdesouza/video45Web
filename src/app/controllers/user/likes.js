@@ -1,5 +1,4 @@
 var Video = require('../../models/video.js');
-var VideoLike = require('../../models/video-likes.js');
 
 module.exports = function(app, isLoggedIn) {
     app.post('/api/like', isLoggedIn, function(req, res) {

@@ -1,6 +1,6 @@
-User = require('../../models/user');
-Video = require('../../models/video');
-Comment = require('../../models/comment');
+var User = require('../../models/user');
+var Video = require('../../models/video');
+var Comment = require('../../models/comment');
 
 
 module.exports = function(app, passport, isLoggedIn) {
@@ -8,29 +8,17 @@ module.exports = function(app, passport, isLoggedIn) {
     // =========================================================================
     // Profile =================================================================
     // =========================================================================
-    app.get('/profile', isLoggedIn, function(request, response) {
-        console.log(request.user.videos);
-        if (request.user.videos.length !== 0) {
-
-            User
-                .findOne({ email: request.user.email })
-                .exec(function(err, user) {
-
-                    if (err) return console.log(err);
-
-                    user.getVideos(function (err, videos) {
-                        console.log(videos);
-                        response.render('profile.jade', {
-                            videos: JSON.stringify(videos) // get user from session
-                        });
-                    });
+    app.get('/:username', isLoggedIn, function(req, res) {
+        User.findOne({username: req.params.username}, function(err, user) {
+            user.getVideos(function (err, user) {
+                for (var i = 0; i < user.videos.length; i++) {
+                    user.videos[i].liked = user.videos[i].likes.indexOf(req.user._id) > -1;
+                }
+                res.render('profile.jade', {
+                    data: user
                 });
-        } else {
-
-            response.render('profile.jade', {
-                videos: null // get user from session
             });
-        }
+        });
     });
 
 

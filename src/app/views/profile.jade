@@ -10,15 +10,15 @@ block content
                 video.first-slide.scale-item(preload="auto" height="100%" autoplay src="/public/vid/dock.mp4" loop)
 
     .container-fluid.centered
-        .col-xs-5.col-md-5
+        .col-xs-4.col-md-3.col-lg-2
             .container
 
         - var textBoxId = []
         - var likeBtnId = []
 
-        .col-xs-7.col-md-7
-            if videos
-                - each video in JSON.parse(videos)
+        .col-xs-8.col-md-8.col-lg-8
+            if data.videos.length != 0
+                - each video in data.videos
                     .row
                         include includes/videopost
             else
@@ -150,7 +150,6 @@ block content
             video[0].pause();
         }
 
-
         $(window).scroll(function () {
             clearTimeout($.data(this, 'scrollTimer'));
             $.data(this, 'scrollTimer', setTimeout(function () {
@@ -173,9 +172,8 @@ block content
             });
         }
 
-
-
-
-
-
-
+        $('.auto-play').each(function () {
+            this.addEventListener('ended', function() {
+                playThis($(this));
+            })
+        })

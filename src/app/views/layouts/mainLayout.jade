@@ -32,7 +32,7 @@ body(style="background-color:lightgrey")
                li: a(href="/home").fa.fa-heartbeat.fa-2x
 
             ul.nav.navbar-nav.navbar-right
-               li: a(href="/profile") Profile
+               li: a(href='/' + '#{ data.username }') Profile
                li: a(href="/logout").fa.fa-sign-out.fa-lg
 
    block content

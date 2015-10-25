@@ -7,8 +7,11 @@ var videos = [
 module.exports = function(app, passport) {
 
     // index ===================================================================
-    app.get('/', function (request, response) {
+    app.get('/', function (req, res) {
+        if (req.user) {
+            res.redirect('/' + req.user.username);
+        }
         var videoPaths = JSON.stringify(videos);
-        response.render('index', {message: request.flash('loginMessage'), videoPath: videoPaths});
+        res.render('index', {message: req.flash('loginMessage'), videoPath: videoPaths});
     });
 };
