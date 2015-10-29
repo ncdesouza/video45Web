@@ -26,7 +26,7 @@ module.exports = {
     },
 
     'gmail' : {
-        'email'     : 'desouza.nicholas@gmail.com',
-        'password'  : 'Sil21989ver'
+        'email'     : 'video45.cloudapp@gmail.com',
+        'password'  : 'video45!'
     }
 };
