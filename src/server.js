@@ -16,6 +16,7 @@ var nodemailer = require('nodemailer');
 var upload = require('multer')({ dest: '../public/uploads'});
 
 var configDB = require('./config/database.js');
+var config = require('./config/secret');
 
 // config ======================================================================
 mongoose.connect(configDB.urlDev); // connect to db
@@ -23,6 +24,7 @@ mongoose.connect(configDB.urlDev); // connect to db
 require('./config/passport')(passport); // pass passport for config
 var transporter = require('./config/email')(nodemailer); // pass nodemailer for config
 
+app.set('superSecret', config.secret);
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
@@ -50,6 +52,7 @@ app.use('/bower_components',  express.static('../bower_components'));
 // controllers ======================================================================
 require('./app/controllers/public/public.js')(app, passport, transporter);
 require('./app/controllers/user/user.js')(app, passport);
+require('./app/controllers/api/api.js')(app, passport);
 
 // launch ======================================================================
 app.listen(port);
