@@ -16,16 +16,17 @@ var Comment = require('../src/app/models/comment');
 
 
 User
-    .findOne({ email: 'user1@test.com' })
+    .findOne({ username: 'user1' })
     .populate('videos')
     .sort({date: 1})
     .exec(
     function(err, doc) {
-        User.populate(doc, {
-                path: 'videos.author',
-                select: '-_id -videos -google -twitter -facebook -password -email',
-                model: User
-                //options: { sort : {date: -1}}
+        console.log(doc);
+    //    User.populate(doc, {
+    //            path: 'videos.author',
+    //            select: '-_id -videos -google -twitter -facebook -password -email',
+    //            model: User
+                options: { sort : {date: -1}}
         //}).populate({
         //    path: 'videos.comments',
         //    model: Comment,
@@ -34,9 +35,9 @@ User
         //    path: 'videos.comments.author',
         //    select: '-_id -videos -google -twitter -facebook -password -email',
         //    model: User
-        }, function (err, doc) {
-            console.log(doc);
-        });
+        //}, function (err, doc) {
+        //    console.log(doc);
+        //});
     });
 
 

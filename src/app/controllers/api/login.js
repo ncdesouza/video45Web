@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
     app.post('/api/login',
-        passport.authenticate('login', {session: false}),
+        passport.authenticate('login'),
         function(req, res) {
             var token = jwt.sign(req.user, app.get('superSecret'), {
                 expiresIn: 86400
