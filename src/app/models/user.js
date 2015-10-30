@@ -15,7 +15,7 @@ var userSchema = Schema({
     username    : String,
     firstName   : String,
     lastName    : String,
-    profilePic  : { type: String, default: '/public/img/default-profile-pic.png' },
+    profilePic  : { type: String, default: '/public/img/ovowl.png' },
     facebook        : {
         id          : String,
         token       : String,
