@@ -76,8 +76,6 @@ userSchema.methods.getVideos = function(callback) {
     );
 };
 
-var deepPopulate = require('mongoose-deep-populate')(mongoose);
-userSchema.plugin(deepPopulate, { whitelist: ['videos', 'comment']});
 
 // export model ================================================================
 module.exports = mongoose.model('User', userSchema);
