@@ -4,7 +4,6 @@ var User = require('../../models/user');
 
 module.exports = function (app) {
     app.get('/api/profile', function (req, res) {
-        //var token = req.body.token || req.query.token || req.headers['x-access-token'];
         var token = req.headers.authorization;
 
         jwt.verify(token, app.get('superSecret'), function(err, decoded) {

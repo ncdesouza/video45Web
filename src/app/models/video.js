@@ -26,6 +26,34 @@ videoSchema.methods.findLikesById = function (userId, callback) {
     return callback(null, null);
 };
 
+videoSchema.methods.findMostRecentAndTrending = function(callback) {
+    this.model('Video')
+        .find({})
+        .sort({date: -1})
+        .exec(function(err, doc) {
+            doc.populate({
+                path: 'videos.author',
+                select: '-_id -videos -google -twitter -facebook -password -email',
+                model: 'User'
+            }, function(err, doc) {
+                doc.populate({
+                    path: 'videos.comments',
+                    model: 'Comment',
+                    options: {sort: {date: 1}}
+                }, function (err, doc) {
+                    doc.populate({
+                        path: 'videos.comments.author',
+                        select: '-_id -videos -google -twitter -facebook -password -email',
+                        model: 'User'
+                    }, function (err, doc) {
+                        callback(null, doc);
+                    });
+                });
+            });
+        }
+    );
+};
+
 // export model ================================================================
 module.exports = mongoose.model('Video', videoSchema);
 
