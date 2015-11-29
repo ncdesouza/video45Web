@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
     app.post('/api/signup',
         passport.authenticate('signup', {session: false}),
         function(req, res)  {
-            var payload = {username: req.username};
+            var payload = {username: req.user.username};
             var token = jwt.sign(payload, app.get('superSecret'), {
                 expiresIn: 86400
             });
