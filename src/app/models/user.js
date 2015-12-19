@@ -9,7 +9,6 @@ require('./video');
 require('./comment');
 
 var userSchema = Schema({
-    //_id         : Number,
     email       : String,
     password    : String,
     username    : String,
