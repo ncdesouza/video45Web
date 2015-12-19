@@ -31,8 +31,8 @@ app.use(morgan('dev')); // log every request to console
 app.use(cookieParser()); // cookie management
 app.use(bodyParser()); // html form handler
 
-app.set('views', 'app/views');
 app.set('view engine', 'jade'); // setup ejs for templates
+app.set('views', 'app/views');
 
 // setup passport
 app.use(session({ secret : 'video454life' }));
