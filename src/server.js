@@ -32,7 +32,7 @@ app.use(cookieParser()); // cookie management
 app.use(bodyParser()); // html form handler
 
 app.set('view engine', 'jade'); // setup ejs for templates
-app.set('views', 'app/views');
+app.set('views', __dirname + '/app/views');
 
 // setup passport
 app.use(session({ secret : 'video454life' }));
