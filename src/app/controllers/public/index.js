@@ -13,6 +13,6 @@ module.exports = function(app, passport) {
             return res.redirect('/' + req.user.username);
         }
         var videoPaths = JSON.stringify(videos);
-        res.render('index', {message: req.flash('loginMessage'), videoPath: videoPaths});
+        res.render('index.jade', {message: req.flash('loginMessage'), videoPath: videoPaths});
     });
 };
