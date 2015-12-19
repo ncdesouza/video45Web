@@ -1,10 +1,61 @@
-div.col-sm-4.col-lg-4
-   img(src="public/img/logo.svg" width="150px" height="150px")
-div.col-sm-8.col-lg-8
-   h1 [video45]
-   h3 Status: #[b  IN PRODUCTION]
-   br
+style.
+   #clock {
+      width: 100%;
+      font-family: sans-serif;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+   }
 
+   #clock > div {
+      border-radius: 3px;
+      background: #C1BA57;
+      display: inline-block;
+   }
+
+   #clock div > span {
+      padding: 15px;
+      border-radius: 3px;
+      background: #000000;
+      display: inline-block;
+   }
+
+   .smalltext {
+      /*padding-top: 5px;*/
+      font-size: 16px;
+   }
+
+   .status {
+      color: dimgrey;
+   }
+
+
+
+div.col-sm-4.col-lg-4
+   img(src="public/img/logo.svg" width="220px" height="220px")
+div.col-sm-8.col-lg-8
+   h1(style="margin-top: 0px") [video45]
+   h3(class="status") Status: #[b  IN PRODUCTION]
+   div#clock
+      div
+         span(class="days")
+         div(class="smalltext") days
+      div
+         span(class="hours")
+         div(class="smalltext") hours
+      div
+         span(class="minutes")
+         div(class="smalltext") minutes
+      div
+         span(class="seconds")
+         div(class="smalltext") seconds
+
+
+br
+br
+hr(style="border-top: 1px solid grey;")
 p Sign up now to get the latest updates and pre-release news.
 
 form(action='/pre-register', method='post', role='form')
@@ -12,5 +63,52 @@ form(action='/pre-register', method='post', role='form')
       input.form-control(type='text', name='email', placeholder='Email')
    div.col-sm-4.col-lg-4
       button.btn.btn-success.btn-md.btn-block(type='submit') Pre-Register
+
+script.
+   function getTimeRemaining(endtime) {
+      var t = Date.parse(endtime) - Date.now();
+      var seconds = Math.floor( (t/1000) % 60 );
+      var minutes = Math.floor( (t/1000/60) % 60 );
+      var hours = Math.floor( (t/(1000*60*60)) % 24 );
+      var days = Math.floor( t/(1000*60*60*24) );
+      return {
+         'total': t,
+         'days': days,
+         'hours': hours,
+         'minutes': minutes,
+         'seconds': seconds
+      };
+   }
+
+   function initializeClock(id, endtime) {
+      var clock = document.getElementById(id);
+      var daysSpan = clock.querySelector('.days');
+      var hoursSpan = clock.querySelector('.hours');
+      var minutesSpan = clock.querySelector('.minutes');
+      var secondsSpan = clock.querySelector('.seconds');
+
+      function updateClock() {
+         var t = getTimeRemaining(endtime);
+
+         daysSpan.innerHTML = t.days;
+         hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+         minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+         secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+         if (t.total <= 0) {
+            clearInterval(timeinterval);
+         }
+
+      }
+
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000)
+   }
+
+   var deadline = 'January 4 2016 23:59:59 UTC-5:00'
+   initializeClock('clock', deadline);
+
+
+
 
 
