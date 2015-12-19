@@ -19,39 +19,17 @@ var usersData = require('./users.json');
 var videosData = require('./videos.json');
 var commentsData = require('./comments.json');
 
-//function
-//buildUsers() {
-//    return new Promise(function (fulfill, reject) {
-//        var users = [];
-//        for (var i = 0; i < usersData.length; i++) {
-//            var user = new User(usersData[i]);
-//            user.generateHash('test');
-//            user.save(function(err) {
-//                if (err) throw err;
-//                console.log('New user created: ' + this.firstName + ' ' + this.lastName);
-//                users.push(this);
-//            });
-//        }
-//    });
-//}
-//
-//function
-//saveUser() {
-//    return new Promise(function (fulfill, reject) {
-//        user.save(function(err) {
-//            if (err) throw err;
-//            console.log('New user created: ' + this.firstName + ' ' + this.lastName);
-//            users.push(this);
-//        });
-//    });
-//}
-//
+var videoUrls = [
+    'Gucci Mane - Lemonade OFFICIAL VIDEO.mp4',
+    'Bobby Shmurda - Hot Ngga.mp4',
+    'AAP ROCKY - Fkin Problems ft Drake 2 Chainz Kendrick Lamar.mp4',
+    'OT Genasis - CoCo Music Video.mp4',
+    'Ty Dolla ign - Or Nah ft The Weeknd Wiz Khalifa  DJ Mustard Music Video.mp4',
+    'Wiz Khalifa - On My Level Ft Too Short Official Music Video.mp4',
+    'Wiz Khalifa - We Dem Boyz Official Video.mp4'
+];
 
 
-//function callback(err) {
-//    if (err) return console.log(err);
-//}
-//
 var user1 = new User({
     email: 'user1@test.com',
     password: 'test',
@@ -75,7 +53,7 @@ user2.password = user2.generateHash('test');
 
 var video1 = new Video({
     author: user1,
-    videoURL: '/public/vid/dock.mp4',
+    videoURL: '/public/vid/' + videoUrls[Math.floor(Math.random() * videoUrls.length)],
     date: new Date(2015, 9, 21),
     title: 'Video1',
     description: 'Test video'
@@ -83,7 +61,7 @@ var video1 = new Video({
 
 var video2 = new Video({
     author: user2,
-    videoURL: '/public/vid/river.mp4',
+    videoURL: '/public/vid/' + videoUrls[Math.floor(Math.random() * videoUrls.length)],
     date: new Date(2015, 9, 22),
     title: 'Video2',
     description: 'Test video'
@@ -91,7 +69,7 @@ var video2 = new Video({
 
 var video3 = new Video({
     author: user1,
-    videoURL: '/public/vid/river.mp4',
+    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
     date: new Date(2015, 9, 23),
     title: 'Video3',
     description: 'Test video'
@@ -99,7 +77,7 @@ var video3 = new Video({
 
 var video4 = new Video({
     author: user1,
-    videoURL: '/public/vid/dock.mp4',
+    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
     date: new Date(2015, 9, 24),
     title: 'Video4',
     description: 'Test video'
@@ -107,7 +85,7 @@ var video4 = new Video({
 
 var video5 = new Video({
     author: user1,
-    videoURL: '/public/vid/river.mp4',
+    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
     date: new Date(2015, 9, 25),
     title: 'Video5',
     description: 'Test video'
@@ -191,3 +169,38 @@ function
 closeDB() {
     mongoose.connection.close();
 }
+
+
+//function
+//buildUsers() {
+//    return new Promise(function (fulfill, reject) {
+//        var users = [];
+//        for (var i = 0; i < usersData.length; i++) {
+//            var user = new User(usersData[i]);
+//            user.generateHash('test');
+//            user.save(function(err) {
+//                if (err) throw err;
+//                console.log('New user created: ' + this.firstName + ' ' + this.lastName);
+//                users.push(this);
+//            });
+//        }
+//    });
+//}
+//
+//function
+//saveUser() {
+//    return new Promise(function (fulfill, reject) {
+//        user.save(function(err) {
+//            if (err) throw err;
+//            console.log('New user created: ' + this.firstName + ' ' + this.lastName);
+//            users.push(this);
+//        });
+//    });
+//}
+//
+
+
+//function callback(err) {
+//    if (err) return console.log(err);
+//}
+//
