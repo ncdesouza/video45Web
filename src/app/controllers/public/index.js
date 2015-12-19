@@ -1,4 +1,5 @@
 var videos = [
+    '/public/vid/YouTube Rewind Now Watch Me 2015  YouTubeRewind.mp4',
     '/public/vid/dock.mp4',
     '/public/vid/frontier.mp4',
     '/public/vid/river.mp4'

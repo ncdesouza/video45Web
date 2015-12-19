@@ -1,3 +1,5 @@
+div(style="position: fixed; bottom: 10px; left: 10px;")
+   button.volume.fa.fa-5x.fa-volume-off(style="color:#fff; background: transparent; border:none;")
 script(src='../../bower_components/jquery/dist/jquery.min.js')
 script(src='../../bower_components/jquery-ui/jquery-ui.js')
 script(src='../../bower_components/jquery-ui/jquery-ui.min.js')
@@ -5,8 +7,21 @@ script(src='../../bower_components/video.js/dist/video-js/video.js')
 script(src='../../bower_components/BigVideo/lib/bigvideo.js')
 script.
    $(function() {
-      var BV = new $.BigVideo();
-      vids = !{ videoPath }
+      var BV = new $.BigVideo({useFlashForFirefox:false});
+      var vids = !{ videoPath }
       BV.init();
-      BV.showPlaylist(vids, {ambient:true});
+      BV.showPlaylist(vids);
+
+      var volume = $('.volume')
+      volume.on('click', function() {
+         if (volume.hasClass('fa-volume-off')) {
+            BV.getPlayer().volume(0);
+            volume.toggleClass('fa-volume-off fa-volume-up')
+         } else if (volume.hasClass('fa-volume-up')) {
+            BV.getPlayer().volume(1);
+            volume.toggleClass('fa-volume-up fa-volume-off')
+         }
+      });
+
    });
+
