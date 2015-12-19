@@ -1,6 +1,11 @@
 /**
  * Created by nicholas on 29/09/15.
  */
+
+Array.prototype.sample = function() {
+    return this[Math.floor(Math.random()*this.length)]
+}
+
 // imports
 var Promise = require('promise');
 
@@ -53,7 +58,7 @@ user2.password = user2.generateHash('test');
 
 var video1 = new Video({
     author: user1,
-    videoURL: '/public/vid/' + videoUrls[Math.floor(Math.random() * videoUrls.length)],
+    videoURL: '/public/vid/' + videoUrls[0],
     date: new Date(2015, 9, 21),
     title: 'Video1',
     description: 'Test video'
@@ -61,7 +66,7 @@ var video1 = new Video({
 
 var video2 = new Video({
     author: user2,
-    videoURL: '/public/vid/' + videoUrls[Math.floor(Math.random() * videoUrls.length)],
+    videoURL: '/public/vid/' + videoUrls[1],
     date: new Date(2015, 9, 22),
     title: 'Video2',
     description: 'Test video'
@@ -69,7 +74,7 @@ var video2 = new Video({
 
 var video3 = new Video({
     author: user1,
-    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
+    videoURL: '/public/vid/' + videoUrls[2],
     date: new Date(2015, 9, 23),
     title: 'Video3',
     description: 'Test video'
@@ -77,7 +82,7 @@ var video3 = new Video({
 
 var video4 = new Video({
     author: user1,
-    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
+    videoURL: '/public/vid/' + videoUrls[3],
     date: new Date(2015, 9, 24),
     title: 'Video4',
     description: 'Test video'
@@ -85,7 +90,7 @@ var video4 = new Video({
 
 var video5 = new Video({
     author: user1,
-    videoURL: '/public/vid/' + + videoUrls[Math.floor(Math.random() * videoUrls.length)],
+    videoURL: '/public/vid/' + videoUrls[4],
     date: new Date(2015, 9, 25),
     title: 'Video5',
     description: 'Test video'
@@ -157,6 +162,7 @@ user2.videos.push(video2);
 
 user1.save(callback);
 user2.save(callback);
+
 
 
 function
