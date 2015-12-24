@@ -2,6 +2,8 @@
   "name": "video45",
   "main": "src/server.js",
   "scripts": {
+    "start": "chdir src && node server.js",
+    "hook:start": "forever start script/github/hook.js",
     "db:start": "mongod --dbpath data/",
     "db:view": "nodejs node_modules/mongo-express/app"
   },
@@ -28,7 +30,9 @@
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
     "promise": "^7.0.4",
-    "timer-stopwatch": "^0.2.0"
+    "timer-stopwatch": "^0.2.0",
+    "bower": "~1.7.1",
+    "gith": "~1.0.4"
   },
   "devDependencies": {
     "mongo-express": "~0.23.2"
