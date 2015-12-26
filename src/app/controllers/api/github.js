@@ -3,11 +3,15 @@
  */
 
 var sys = require('sys');
-var exec = require('child-process').exec;
-var child
+var exec = require('child_process').exec;
 
 module.exports = function(app, passport) {
     app.post('/api/github', function(req, res) {
-        child = exec("sudo git pull")
+        var payload = req.body;
+        if (payload.repository.full_name == 'ncdesouza/video45Web') {
+            if (payload.ref == 'refs/head/master') {
+                exec()
+            }
+        }
     });
 };
