@@ -10,7 +10,6 @@ module.exports = function(app, passport) {
         var payload = req.body;
         if (payload.repository.full_name == 'ncdesouza/video45Web') {
             if (payload.ref == 'refs/head/master') {
-                console.log(payload.ref);
                 console.log('Preforming a Git Pull');
                 exec('/home/video45/www/video45Web/script/github/hook.sh',
                 function(err, stdout, stderr) {
