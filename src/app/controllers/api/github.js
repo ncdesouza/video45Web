@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
         var payload = req.body;
         if (payload.repository.full_name == 'ncdesouza/video45Web') {
             if (payload.ref == 'refs/head/master') {
-                exec()
+                exec('/home/video45/www/video45Web/script/github/hook.sh)
             }
         }
     });
