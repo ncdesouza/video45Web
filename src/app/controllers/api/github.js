@@ -10,8 +10,16 @@ module.exports = function(app, passport) {
         var payload = req.body;
         if (payload.repository.full_name == 'ncdesouza/video45Web') {
             if (payload.ref == 'refs/head/master') {
-                exec('/home/video45/www/video45Web/script/github/hook.sh)
+                exec('/home/video45/www/video45Web/script/github/hook.sh',
+                function(err, stdout, stderr) {
+                    console.log('stdout: ' + stdout);
+                    console.log('stderr: ' + stderr);
+                    if (err !== null) {
+                        console.log('ERROR: ' + err);
+                    }
+                });
             }
+            res.status(200).send();
         }
     });
 };
