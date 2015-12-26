@@ -1,8 +1,8 @@
 var Comment = require('../../models/comment.js');
 var Video = require('../../models/video.js');
-module.exports = function(app, isLoggedIn) {
+module.exports = function(app, isValidUser) {
 
-    app.post('/api/comment', isLoggedIn, function(req, res) {
+    app.post('/api/comment', isValidUser, function(req, res) {
 
             Video
                 .findById(req.body.videoId)

@@ -6,8 +6,6 @@ module.exports = function(app, passport) {
     require('./profile')(app, passport, isLoggedIn);
     require('./connect')(app, passport, isLoggedIn);
     require('./home')(app, isLoggedIn);
-    require('./comments')(app, isLoggedIn);
-    require('./likes')(app, isLoggedIn);
 
 
     // =========================================================================
