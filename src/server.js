@@ -3,8 +3,8 @@
 // set up ======================================================================
 var express = require('express');
 var app = express();
-var cors = require('cors');
-app.use('*', cors());
+//var cors = require('cors');
+//app.use('*', cors());
 
 
 var port = process.env.Port || 5000;
