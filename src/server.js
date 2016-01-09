@@ -3,6 +3,10 @@
 // set up ======================================================================
 var express = require('express');
 var app = express();
+var cors = require('cors');
+app.use('*', cors());
+
+
 var port = process.env.Port || 5000;
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -25,8 +29,6 @@ require('./config/passport')(passport); // pass passport for config
 var transporter = require('./config/email')(nodemailer); // pass nodemailer for config
 
 app.set('superSecret', config.secret);
-var cors = require('cors');
-app.use('*', cors());
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
