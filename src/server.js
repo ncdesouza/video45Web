@@ -25,6 +25,8 @@ require('./config/passport')(passport); // pass passport for config
 var transporter = require('./config/email')(nodemailer); // pass nodemailer for config
 
 app.set('superSecret', config.secret);
+var cors = require('cors');
+app.use(cors());
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
