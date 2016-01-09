@@ -2,7 +2,7 @@
   "name": "video45",
   "main": "src/server.js",
   "scripts": {
-    "start": "chdir src && node server.js",
+    "start": "chdir src && nodemon server.js",
     "hook:start": "forever start script/github/hook.js",
     "db:start": "mongod --dbpath data/",
     "db:view": "nodejs node_modules/mongo-express/app"
