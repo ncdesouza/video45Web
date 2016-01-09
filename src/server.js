@@ -26,7 +26,7 @@ var transporter = require('./config/email')(nodemailer); // pass nodemailer for 
 
 app.set('superSecret', config.secret);
 var cors = require('cors');
-app.use(cors());
+app.use('*', cors());
 
 // setup express app
 app.use(morgan('dev')); // log every request to console
