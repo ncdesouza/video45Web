@@ -3,7 +3,7 @@ var User = require('../../models/user');
 module.exports = function (app, isValidUser) {
     app.get('/api/profile', isValidUser, function (req, res) {
 
-        User.findOne({username: decoded.username}, function(err, user) {
+        User.findOne({username: req.decoded.username}, function(err, user) {
             user.getVideos(function (err, user) {
                 for (var i = 0; i < user.videos.length; i++) {
                     user.videos[i].liked = user.videos[i].likes.indexOf(req.user._id) > -1;
