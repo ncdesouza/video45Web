@@ -4,6 +4,7 @@
 //var express = require('express');
 //var apiRoutes = express.router();
 var jwt = require('jsonwebtoken');
+var User = require('../../models/user.js');
 
 module.exports = function(app, passport) {
 
