@@ -6,23 +6,23 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(app, passport) {
 
-    app.post('/api/login', passport.authenticate('login'),
-        function(req, res) {
-            var payload = {username: req.user.username};
-            var token = jwt.sign(payload, app.get('superSecret'), {
-                expiresIn: 86400
-            });
+    //app.post('/api/login', passport.authenticate('login'),
+    //    function(req, res) {
+    //        var payload = {username: req.user.username};
+    //        var token = jwt.sign(payload, app.get('superSecret'), {
+    //            expiresIn: 86400
+    //        });
+    //
+    //        res.json({
+    //            success: true,
+    //            message: 'Enjoy!',
+    //            token: token
+    //        });
+    //    }
+    //);
 
-            res.json({
-                success: true,
-                message: 'Enjoy!',
-                token: token
-            });
-        }
-    );
 
-
-    app.post('/react/login',
+    app.post('/api/login',
         function(req, res) {
             console.log(req.body);
             User.findOne({ 'email' : req.body.email } , function(err, user) {
