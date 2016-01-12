@@ -47,7 +47,7 @@ module.exports = function(app, passport) {
                 }
 
                 // success: create token and send to client
-                var payload = {username: req.user.username};
+                var payload = {username: user.username};
                 var token = jwt.sign(payload, app.get('superSecret'), {expiresIn: 86400});
                 return res.status(200).json({
                     success: true,
