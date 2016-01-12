@@ -8,26 +8,16 @@ module.exports = function(app, passport) {
 
     app.post('/api/login', passport.authenticate('login'),
         function(req, res) {
+            var payload = {username: req.user.username};
+            var token = jwt.sign(payload, app.get('superSecret'), {
+                expiresIn: 86400
+            });
 
-            if (req.user) {
-
-                var payload = {username: req.user.username};
-                var token = jwt.sign(payload, app.get('superSecret'), {
-                    expiresIn: 86400
-                });
-
-                res.json({
-                    success: true,
-                    message: 'Enjoy!',
-                    token: token
-                });
-            } else {
-                res.json({
-                    success: false,
-                    message: 'Access Denied',
-                    token: null
-                });
-            }
+            res.json({
+                success: true,
+                message: 'Enjoy!',
+                token: token
+            });
         }
     );
 
