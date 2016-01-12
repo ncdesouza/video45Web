@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
 
     app.post('/react/login',
         function(req, res) {
-            User.findOne({ 'email' : email } , function(err, user) {
+            User.findOne({ 'email' : req.body.email } , function(err, user) {
 
                 // if errors, return the errors
                 if (err) {
@@ -38,7 +38,7 @@ module.exports = function(app, passport) {
                 }
 
                 // if user not found or invalid password
-                if (!user || !user.validPassword(password)) {
+                if (!user || !user.validPassword(req.body.password)) {
                     return res.status(401).json({
                         success: false,
                         message: 'Username or password is incorrect',
