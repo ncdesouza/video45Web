@@ -9,8 +9,8 @@ module.exports = function(app, passport) {
     server = app;
 
     require('./login')(app, passport);
-    require('./home')(app, isValidUser);
     require('./signup')(app, passport);
+    require('./home')(app, isValidUser);
     require('./public')(app, isValidUser);
     require('./github')(app, isValidUser);
     require('./comment')(app, isValidUser);

@@ -7,7 +7,6 @@ var jwt = require('jsonwebtoken');
 module.exports = function (app, isValidUser) {
 
     app.get('/api/home', isValidUser,  function (req, res) {
-
         Video
             .find({})
             .sort({date: -1})
