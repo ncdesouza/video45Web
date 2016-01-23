@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
             res.json({
                 success: true,
                 message: 'Enjoy!',
-                user: req.user.username,
+                username: req.user.username,
                 token: token
             });
         }
