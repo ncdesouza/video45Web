@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
 };
 
 function isValidUser(req, res, next) {
-    var token = req.headers.authorization;
+    var token = req.headers.authorization || req.cookies.video45;
     jwt.verify(token, server.get('superSecret'), function(err, decoded) {
         if (err) return res.json({success: false, msg: 'Token failed', data: ''});
         req.decoded = decoded;
