@@ -53,7 +53,7 @@ app.use('/public', express.static('../public'));
 app.use('/bower_components',  express.static('../bower_components'));
 
 var allowCrossDomain = function(req, res, next) {
-    var host = req.get('host');
+    var host = req.get('origin');
     res.header('Access-Control-Allow-Origin', host);
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
