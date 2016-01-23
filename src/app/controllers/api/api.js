@@ -9,12 +9,14 @@ module.exports = function(app, passport) {
     server = app;
 
     require('./login')(app, passport);
+    require('./home')(app, isValidUser);
     require('./signup')(app, passport);
-    require('./profile')(app, isValidUser);
     require('./public')(app, isValidUser);
     require('./github')(app, isValidUser);
     require('./comment')(app, isValidUser);
-    require('./likes')(app, isValidUser);
+    require('./likes')(app, isValidUser)
+    require('./profile')(app, isValidUser);
+
 
 };
 

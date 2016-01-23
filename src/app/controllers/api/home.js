@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
  */
 module.exports = function (app, isValidUser) {
 
-    app.get('/api/public', isValidUser,  function (req, res) {
+    app.get('/api/home', isValidUser,  function (req, res) {
 
         Video
             .find({})
